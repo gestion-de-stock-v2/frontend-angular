@@ -1,0 +1,45 @@
+<div class="payments-page">
+  <div class="page-header">
+    <div class="page-title">
+      <app-icon name="key" [size]="28"></app-icon>
+      <div><h2>Paiements</h2><p>Enregistrer un paiement</p></div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="card-header"><app-icon name="save" [size]="20"></app-icon><h3>Nouveau paiement</h3></div>
+    <form (ngSubmit)="submit()" class="user-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Commande</label>
+          <select [(ngModel)]="novo.orderReference" name="order" (ngModelChange)="onOrderSelect($event)" required>
+            <option value="">-- Sélectionner --</option>
+            <option *ngFor="let o of orders" [value]="o.reference">{{ o.reference }} - {{ o.totalAmount | number:'1.2-2' }} €</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Montant (€)</label>
+          <input [(ngModel)]="novo.amount" name="amount" type="number" step="0.01" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Prénom client</label><input [(ngModel)]="novo.customerFirstname" name="firstname" /></div>
+        <div class="form-group"><label>Nom client</label><input [(ngModel)]="novo.customerLastname" name="lastname" /></div>
+      </div>
+      <div class="form-group"><label>Email client</label><input [(ngModel)]="novo.customerEmail" name="email" type="email" /></div>
+      <div class="form-group">
+        <label>Méthode</label>
+        <select [(ngModel)]="novo.paymentMethod" name="method">
+          <option value="CREDIT_CARD">Carte bancaire</option>
+          <option value="PAYPAL">PayPal</option>
+          <option value="CASH">Espèces</option>
+        </select>
+      </div>
+      <p *ngIf="erro" class="msg-error">{{ erro }}</p>
+      <p *ngIf="success" class="msg-success">{{ success }}</p>
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="loading">{{ loading ? 'Envoi...' : 'Enregistrer' }}</button>
+      </div>
+    </form>
+  </div>
+</div>

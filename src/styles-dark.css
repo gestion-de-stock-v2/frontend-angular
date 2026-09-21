@@ -1,0 +1,337 @@
+/* ============================================================
+   MODE SOMBRE — CHARTE GRAPHIQUE
+   ============================================================ */
+html.dark {
+  --bg-body:        #0F172A;
+  --bg-card:        #1E293B;
+  --bg-elevated:    #1E293B;
+  --bg-hover:       #334155;
+  --bg-subtle:      #334155;
+  --bg-header:      #111827;
+  --bg-header-chip: rgba(255, 255, 255, .06);
+
+  --text-primary:   #F9FAFB;
+  --text-secondary: #CBD5E1;
+  --text-muted:     #94A3B8;
+  --text-faint:     #64748B;
+
+  --border-light:   #334155;
+  --border:         #334155;
+  --border-strong:  #475569;
+
+  --primary:        #60A5FA;
+  --primary-dark:   #3B82F6;
+  --primary-light:  #1E3A8A;
+  --primary-text:   #93C5FD;
+
+  --accent:         #F97316;
+  --accent-dark:    #EA580C;
+  --accent-light:   #7C2D12;
+
+  --success:        #4ADE80;
+  --success-bg:     #14532D;
+  --danger:         #F87171;
+  --danger-bg:      #7F1D1D;
+  --warning:        #FBBF24;
+  --warning-bg:     #78350F;
+}
+
+html.dark body {
+  background: #0F172A !important;
+  color: #F9FAFB;
+}
+
+/* Header */
+html.dark .app-header {
+  background: #111827 !important;
+}
+html.dark .user-chip {
+  background: rgba(255, 255, 255, .06) !important;
+  color: #F9FAFB !important;
+}
+html.dark .header-nav a {
+  color: #94A3B8;
+}
+html.dark .header-nav a:hover {
+  background: rgba(255, 255, 255, .08);
+  color: #FFFFFF;
+}
+html.dark .header-nav a.active {
+  background: #F97316;
+  color: #FFFFFF;
+}
+html.dark .theme-btn {
+  background: rgba(255, 255, 255, .08);
+}
+
+/* Cartes */
+html.dark .card,
+html.dark .form-card,
+html.dark .table-card,
+html.dark .stat-card,
+html.dark .info-card,
+html.dark .dash-card,
+html.dark .card.form-card,
+html.dark .cards .card {
+  background: #1E293B !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .35) !important;
+  color: #F9FAFB;
+}
+
+html.dark .card-header {
+  border-bottom-color: #334155 !important;
+}
+html.dark .card-header h3,
+html.dark .card h3 {
+  color: #F9FAFB !important;
+}
+
+html.dark h1,
+html.dark h2,
+html.dark h3 {
+  color: #F9FAFB !important;
+}
+html.dark .page-title h2 {
+  color: #F9FAFB !important;
+}
+html.dark .page-title p {
+  color: #94A3B8 !important;
+}
+
+/* Tableaux */
+html.dark .table {
+  background: #1E293B !important;
+  color: #F9FAFB;
+}
+html.dark .table thead,
+html.dark .table th {
+  background: #0F172A !important;
+  color: #CBD5E1 !important;
+  border-bottom-color: #334155 !important;
+}
+html.dark .table td {
+  color: #F9FAFB !important;
+  border-bottom-color: #334155 !important;
+}
+html.dark .table tbody tr:hover {
+  background: #334155 !important;
+}
+
+/* Formulaires */
+html.dark .form,
+html.dark .form-card,
+html.dark form {
+  color: #F9FAFB;
+}
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background: #0F172A !important;
+  color: #F9FAFB !important;
+  border-color: #334155 !important;
+}
+html.dark input::placeholder {
+  color: #64748B;
+}
+html.dark input:focus,
+html.dark select:focus {
+  border-color: #60A5FA !important;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, .2) !important;
+}
+html.dark label {
+  color: #CBD5E1 !important;
+}
+html.dark .form-group label {
+  color: #CBD5E1;
+}
+html.dark .btn-secondary {
+  background: #334155 !important;
+  color: #E2E8F0 !important;
+  border-color: #475569 !important;
+}
+html.dark .btn-secondary:hover {
+  background: #475569 !important;
+}
+html.dark .btn-icon {
+  background: #1E293B !important;
+  color: #CBD5E1 !important;
+  border-color: #334155 !important;
+}
+html.dark .btn-icon:hover:not(:disabled) {
+  background: #334155 !important;
+  color: #60A5FA !important;
+}
+
+/* Dashboard / infos */
+html.dark .card {
+  background: #1E293B !important;
+}
+html.dark .card p {
+  color: #94A3B8;
+}
+html.dark .info-value {
+  color: #F9FAFB;
+}
+html.dark .info-sub {
+  color: #94A3B8;
+}
+html.dark .info-label {
+  color: #64748B;
+}
+html.dark .info-icon {
+  background: #1E3A8A;
+  color: #93C5FD;
+}
+
+/* Badges et tags */
+html.dark .role-pill {
+  color: #FFFFFF;
+}
+html.dark .status-pill.active {
+  background: #14532D !important;
+  color: #4ADE80 !important;
+}
+html.dark .status-pill.inactive {
+  background: #7F1D1D !important;
+  color: #F87171 !important;
+}
+html.dark .badge.entrada {
+  background: #14532D !important;
+  color: #4ADE80 !important;
+  border-color: #16A34A !important;
+}
+html.dark .badge.saida {
+  background: #7F1D1D !important;
+  color: #F87171 !important;
+  border-color: #DC2626 !important;
+}
+html.dark .self-tag {
+  background: #1E3A8A !important;
+  color: #93C5FD !important;
+}
+html.dark .id-badge {
+  background: #334155 !important;
+  color: #CBD5E1 !important;
+}
+html.dark .tag {
+  background: #1E3A8A !important;
+  color: #93C5FD !important;
+}
+html.dark .tag.supplier {
+  background: #4C1D95 !important;
+  color: #C4B5FD !important;
+}
+
+html.dark .input-icon {
+  color: #64748B;
+}
+
+/* Messages */
+html.dark .msg-error,
+html.dark .erro {
+  background: #7F1D1D !important;
+  color: #FECACA !important;
+  border-color: #991B1B !important;
+}
+html.dark .msg-success {
+  background: #14532D !important;
+  color: #BBF7D0 !important;
+  border-color: #166534 !important;
+}
+
+/* Rôles */
+html.dark .role-option {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+}
+html.dark .role-option:hover {
+  background: #1E293B !important;
+}
+html.dark .role-option.selected {
+  background: #1E293B !important;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, .25) !important;
+}
+html.dark .role-option .role-label {
+  color: #F9FAFB !important;
+}
+
+/* Profile */
+html.dark .profile-header {
+  background: #1E293B !important;
+  border-left-color: #60A5FA !important;
+}
+html.dark .profile-info h2 {
+  color: #F9FAFB !important;
+}
+html.dark .username {
+  color: #94A3B8 !important;
+}
+html.dark .info-row {
+  border-bottom-color: #334155 !important;
+}
+html.dark .info-row .value {
+  color: #F9FAFB !important;
+}
+html.dark .info-row .label {
+  color: #64748B !important;
+}
+html.dark .role-description {
+  color: #CBD5E1 !important;
+}
+
+/* Login / Signup / Forgot / Reset */
+html.dark .login-card {
+  background: #1E293B !important;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, .6);
+}
+html.dark .login-header h1 {
+  color: #F9FAFB !important;
+}
+html.dark .subtitle {
+  color: #94A3B8 !important;
+}
+html.dark .form-group label {
+  color: #CBD5E1 !important;
+}
+html.dark .input-wrapper input {
+  background: #0F172A !important;
+  color: #F9FAFB !important;
+  border-color: #334155 !important;
+}
+html.dark .profils-title {
+  color: #94A3B8 !important;
+}
+html.dark .profil-btn {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+}
+html.dark .profil-btn:hover {
+  background: #1E293B !important;
+}
+html.dark .profil-btn .label {
+  color: #F9FAFB !important;
+}
+html.dark .forgot-link {
+  color: #60A5FA !important;
+}
+html.dark .back-link {
+  color: #94A3B8 !important;
+}
+html.dark .login-footer {
+  border-top-color: #334155 !important;
+}
+
+/* Transitions globales */
+html,
+body,
+.app-header,
+.card,
+.form-card,
+.table-card,
+.info-card,
+.stat-card,
+input,
+select,
+button {
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+}

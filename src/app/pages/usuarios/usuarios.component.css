@@ -1,0 +1,412 @@
+/* ============================================================
+   UTILISATEURS — BLEU CIEL + BLANC UNIQUEMENT
+   Normal : bleu ciel + texte blanc
+   Hover  : couleur qui change (au choix plus bas)
+   ============================================================ */
+:host {
+  display: block;
+  --role-color: #1E3A8A;
+}
+
+.usuarios-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* ---------- En-tête ---------- */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  color: #1E3A8A;
+}
+
+.page-title h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.page-title p {
+  margin: .25rem 0 0;
+  color: #111827;
+  opacity: .6;
+  font-size: .9rem;
+}
+
+/* ---------- Bouton Ajouter : bleu ciel + blanc ---------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .7rem 1.2rem;
+  background: #1E3A8A;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: .9rem;
+  font-family: inherit;
+  transition: background .2s, transform .15s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #F97316;          /* ← change en orange au survol */
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* ---------- Bouton Annuler : idem ---------- */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .7rem 1.2rem;
+  background: #1E3A8A;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: .9rem;
+  font-family: inherit;
+  transition: background .2s, transform .15s;
+}
+
+.btn-secondary:hover {
+  background: #F97316;
+  transform: translateY(-1px);
+}
+
+/* ---------- Statistiques ---------- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #FFFFFF;
+  padding: 1.25rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(17, 24, 39, .08);
+  border-left: 4px solid #1E3A8A;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #1E3A8A;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1;
+}
+
+.stat-label {
+  margin-top: .25rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: #111827;
+  opacity: .6;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+/* ---------- Carte générique ---------- */
+.card {
+  background: #FFFFFF;
+  padding: 1.5rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(17, 24, 39, .08);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: 1rem;
+  padding-bottom: .75rem;
+  color: #1E3A8A;
+  border-bottom: 1px solid rgba(17, 24, 39, .08);
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ---------- Formulaire ---------- */
+.form-card { border-left: 4px solid #1E3A8A; }
+.user-form { display: flex; flex-direction: column; gap: 1rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+@media (max-width: 640px) {
+  .form-row { grid-template-columns: 1fr; }
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: .4rem;
+  font-size: .85rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.required { color: #F97316; }
+
+.input-wrapper { position: relative; display: flex; align-items: center; }
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #111827;
+  opacity: .4;
+  pointer-events: none;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: .7rem .9rem .7rem 2.4rem;
+  border: 1.5px solid rgba(17, 24, 39, .25);
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #111827;
+  font-size: .95rem;
+  font-family: inherit;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.input-wrapper input::placeholder { color: #111827; opacity: .35; }
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: #1E3A8A;
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, .15);
+}
+
+.toggle-pwd {
+  position: absolute;
+  right: 8px;
+  padding: 6px;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  color: #111827;
+  opacity: .5;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .2s;
+}
+
+.toggle-pwd:hover { opacity: 1; }
+
+/* ---------- Grille des rôles ---------- */
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: .5rem;
+}
+
+.role-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: .65rem .5rem;
+  border: 1.5px solid #1E3A8A;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #1E3A8A;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+
+.role-option:hover {
+  background: #1E3A8A;
+  color: #FFFFFF;
+}
+
+.role-option.selected {
+  background: #1E3A8A;
+  color: #FFFFFF;
+}
+
+.role-option .role-label {
+  font-weight: 600;
+  font-size: .8rem;
+  color: inherit;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: .75rem;
+  padding-top: .75rem;
+  border-top: 1px solid rgba(17, 24, 39, .08);
+}
+
+/* ---------- Tableau ---------- */
+.table { width: 100%; border-collapse: collapse; }
+
+.table th,
+.table td {
+  padding: .85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(17, 24, 39, .08);
+}
+
+.table th {
+  background: #1E3A8A;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.table td { color: #111827; font-size: .9rem; }
+.table tbody tr:hover { background: rgba(17, 24, 39, .04); }
+.table tbody tr.inactive { opacity: .55; }
+
+/* ---------- Cellules ---------- */
+.user-cell { display: flex; align-items: center; gap: .6rem; }
+
+.user-avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1E3A8A;
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.self-tag {
+  padding: .15rem .4rem;
+  font-size: .7rem;
+  font-weight: 600;
+  background: #1E3A8A;
+  color: #FFFFFF;
+  border-radius: 4px;
+}
+
+.email-cell {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  color: #111827;
+  opacity: .65;
+  font-size: .85rem;
+}
+
+/* ---------- Badges ---------- */
+.role-pill {
+  display: inline-block;
+  padding: .25rem .65rem;
+  border-radius: 12px;
+  background: #1E3A8A;
+  color: #FFFFFF;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .25rem .6rem;
+  border-radius: 12px;
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.status-pill.active   { background: #1E3A8A; color: #FFFFFF; }
+.status-pill.inactive { background: #1E3A8A; color: #FFFFFF; opacity: .55; }
+
+/* ---------- Boutons d'action : bleu ciel + blanc ---------- */
+.actions-cell { display: flex; gap: .35rem; }
+
+.btn-icon {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 6px;
+  background: #1E3A8A;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, transform .15s;
+}
+
+/* Au survol → orange (l'accent) */
+.btn-icon:hover:not(:disabled) {
+  background: #F97316;
+  transform: translateY(-1px);
+}
+
+.btn-icon:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+/* ---------- État vide ---------- */
+.empty-row {
+  padding: 2rem !important;
+  text-align: center;
+  color: #111827;
+  opacity: .55;
+}
+
+.empty-row p { margin: 0; font-size: .9rem; }
+
+/* ---------- Messages ---------- */
+.msg-error,
+.msg-success {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .7rem 1rem;
+  border-radius: 8px;
+  font-size: .9rem;
+  margin: 0;
+  background: #1E3A8A;
+  color: #FFFFFF;
+}

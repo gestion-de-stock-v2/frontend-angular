@@ -1,0 +1,129 @@
+<div class="produtos-page">
+
+  <div class="page-header">
+    <div class="page-title">
+      <app-icon name="box" [size]="28"></app-icon>
+      <div>
+        <h2>Produits</h2>
+        <p>Catalogue et disponibilité</p>
+      </div>
+    </div>
+    <button class="btn-primary" (click)="toggleForm()">
+      <app-icon [name]="showForm ? 'close' : 'plus'" [size]="18"></app-icon>
+      <span>{{ showForm ? 'Annuler' : 'Nouveau produit' }}</span>
+    </button>
+  </div>
+
+  <!-- Barre de recherche -->
+  <div class="search-bar">
+    <app-icon name="search" [size]="18"></app-icon>
+    <input [(ngModel)]="searchTerm" (ngModelChange)="applyFilter()"
+           placeholder="Rechercher un produit..." />
+  </div>
+
+  <!-- Formulaire -->
+  <div class="form-card" *ngIf="showForm">
+    <div class="card-header">
+      <app-icon [name]="editandoId ? 'edit' : 'plus'" [size]="20"></app-icon>
+      <h3>{{ editandoId ? 'Modifier' : 'Créer' }} un produit</h3>
+    </div>
+
+    <form (ngSubmit)="salvar()" class="user-form">
+      <div class="form-group">
+        <label>Nom du produit</label>
+        <input [(ngModel)]="novo.name" name="name" placeholder="Notebook Lenovo" required />
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <input [(ngModel)]="novo.description" name="description" placeholder="Intel i5, 8GB RAM" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prix (€)</label>
+          <input [(ngModel)]="novo.price" name="price" type="number" step="0.01" min="0" required />
+        </div>
+        <div class="form-group">
+          <label>Quantité disponible</label>
+          <input [(ngModel)]="novo.availableQuantity" name="availableQuantity"
+                 type="number" min="0" required />
+        </div>
+      </div>
+
+      <p *ngIf="erro" class="msg-error">
+        <app-icon name="alert" [size]="16"></app-icon>
+        <span>{{ erro }}</span>
+      </p>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="toggleForm()">
+          <app-icon name="close" [size]="16"></app-icon> Annuler
+        </button>
+        <button type="submit" class="btn-primary" [disabled]="loading">
+          <app-icon name="save" [size]="16"></app-icon>
+          <span>{{ loading ? 'Enregistrement...' : 'Enregistrer' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <p *ngIf="success" class="msg-success">
+    <app-icon name="check" [size]="16"></app-icon>
+    <span>{{ success }}</span>
+  </p>
+
+  <p *ngIf="erro && !showForm" class="msg-error">
+    <app-icon name="alert" [size]="16"></app-icon>
+    <span>{{ erro }}</span>
+  </p>
+
+  <!-- Tableau -->
+  <div class="card">
+    <div class="card-header">
+      <app-icon name="box" [size]="20"></app-icon>
+      <h3>Produits ({{ filtered.length }})</h3>
+    </div>
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Prix</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let p of filtered">
+        <td><span class="id-badge">{{ p.id }}</span></td>
+        <td><strong>{{ p.name }}</strong></td>
+        <td class="desc-cell">{{ p.description }}</td>
+        <td class="price">{{ p.price | number:'1.2-2' }} €</td>
+        <td>
+            <span class="stock-badge" [ngClass]="getStockClass(p.availableQuantity)">
+              {{ p.availableQuantity }}
+            </span>
+        </td>
+        <td class="actions-cell">
+          <button class="btn-icon" (click)="editar(p)" title="Modifier">
+            <app-icon name="edit" [size]="16"></app-icon>
+          </button>
+          <button class="btn-icon danger" (click)="excluir(p.id!)" title="Supprimer">
+            <app-icon name="trash" [size]="16"></app-icon>
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="filtered.length === 0">
+        <td colspan="6" class="empty-row">
+          <app-icon name="box" [size]="24"></app-icon>
+          <p>Aucun produit{{ searchTerm ? ' correspondant à la recherche' : '' }}</p>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

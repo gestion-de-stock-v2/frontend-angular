@@ -1,0 +1,268 @@
+/* ============================================================
+   HEADER — CHARTE GRAPHIQUE
+   Blanc #FFFFFF  |  Bleu #1E3A8A  |  Noir #111827  |  Orange #F97316
+   ============================================================ */
+
+.app-header {
+  background: #1E3A8A;
+  color: #FFFFFF;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 12px rgba(17, 24, 39, .15);
+  transition: background .3s ease;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ============================================================
+   LOGO + MARQUE
+   ============================================================ */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  text-decoration: none;
+  color: #FFFFFF;
+  transition: transform .2s;
+}
+
+.brand:hover {
+  transform: translateY(-1px);
+}
+
+.brand-logo {
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(255, 255, 255, .25));
+  transition: filter .3s;
+}
+
+.brand:hover .brand-logo {
+  filter: drop-shadow(0 6px 12px rgba(249, 115, 22, .55));
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -.02em;
+}
+
+.brand-sub {
+  font-size: .7rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  opacity: .75;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   MENU UTILISATEUR
+   ============================================================ */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .4rem .8rem;
+  background: rgba(255, 255, 255, .12);
+  color: #FFFFFF;
+  border-left: 3px solid #F97316;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background .2s, transform .2s;
+}
+
+.user-chip:hover {
+  background: rgba(255, 255, 255, .22);
+  transform: translateY(-1px);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #F97316;
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.user-text .name {
+  font-size: .85rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.user-text .role {
+  font-size: .7rem;
+  color: #FFFFFF;
+  opacity: .75;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* ---------- Déconnexion : ghost blanc → orange au survol ---------- */
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .55rem 1rem;
+  background: transparent;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, .35);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: .85rem;
+  font-weight: 600;
+  font-family: inherit;
+  transition: background .2s, border-color .2s, transform .15s;
+}
+
+.logout-btn:hover {
+  background: #F97316;
+  border-color: #F97316;
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.header-nav {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+}
+
+.header-nav a {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .5rem .9rem;
+  color: #FFFFFF;
+  opacity: .85;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: .9rem;
+  font-weight: 500;
+  transition: background .2s, color .2s, opacity .2s;
+}
+
+.header-nav a:hover {
+  background: rgba(255, 255, 255, .10);
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+/* Lien actif : seul élément accent de la barre */
+.header-nav a.active {
+  background: #F97316;
+  color: #FFFFFF;
+  opacity: 1;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, .40);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 720px) {
+  .app-header {
+    padding: .75rem 1rem;
+  }
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .user-menu {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .header-nav {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: .25rem;
+  }
+  .header-nav a {
+    white-space: nowrap;
+  }
+  .brand-text {
+    display: none;
+  }
+}
+
+/* ============================================================
+   MODE SOMBRE — header noir
+   ============================================================ */
+:host-context(html.dark) .app-header {
+  background: #111827;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .6);
+}
+
+:host-context(html.dark) .brand-title {
+  color: #FFFFFF;
+}
+
+:host-context(html.dark) .brand-sub {
+  color: #FFFFFF;
+  opacity: .75;
+}
+
+:host-context(html.dark) .user-chip {
+  background: rgba(255, 255, 255, .06);
+}
+
+:host-context(html.dark) .user-chip:hover {
+  background: rgba(255, 255, 255, .12);
+}
+
+:host-context(html.dark) .user-text .name {
+  color: #FFFFFF;
+}
+
+:host-context(html.dark) .user-text .role {
+  color: #FFFFFF;
+  opacity: .75;
+}
+
+:host-context(html.dark) .header-nav a {
+  color: #FFFFFF;
+  opacity: .75;
+}
+
+:host-context(html.dark) .header-nav a:hover {
+  background: rgba(255, 255, 255, .08);
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+:host-context(html.dark) .header-nav a.active {
+  background: #F97316;
+  color: #FFFFFF;
+  opacity: 1;
+}

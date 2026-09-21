@@ -1,0 +1,140 @@
+<div class="dashboard-page">
+
+  <div class="dash-header">
+    <div>
+      <h2>Tableau de bord</h2>
+      <p>Vue d'ensemble de votre activité</p>
+    </div>
+    <button class="btn-refresh" (click)="carregar()">
+      <app-icon name="trending" [size]="18"></app-icon>
+      <span>Actualiser</span>
+    </button>
+  </div>
+
+  <!-- Erreur -->
+  <p *ngIf="erro" class="msg-error">
+    <app-icon name="alert" [size]="16"></app-icon>
+    <span>{{ erro }}</span>
+  </p>
+
+  <!-- Cartes statistiques -->
+  <div class="stats-grid">
+
+    <div class="stat-card" (click)="goTo('/products')">
+      <div class="stat-icon blue">
+        <app-icon name="box" [size]="22"></app-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalProducts }}</span>
+        <span class="stat-label">Produits</span>
+      </div>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/customers')">
+      <div class="stat-icon purple">
+        <app-icon name="user" [size]="22"></app-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalCustomers }}</span>
+        <span class="stat-label">Clients</span>
+      </div>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/orders')">
+      <div class="stat-icon orange">
+        <app-icon name="cart" [size]="22"></app-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalOrders }}</span>
+        <span class="stat-label">Commandes</span>
+      </div>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/products')">
+      <div class="stat-icon green">
+        <app-icon name="package" [size]="22"></app-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ stockTotal }}</span>
+        <span class="stat-label">Unités en stock</span>
+      </div>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/orders')">
+      <div class="stat-icon red">
+        <app-icon name="chart" [size]="22"></app-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalRevenue | number:'1.0-0' }} €</span>
+        <span class="stat-label">Chiffre d'affaires</span>
+      </div>
+    </div>
+
+    <div class="stat-card" (click)="goTo('/payments')">
+      <div class="stat-icon cyan">
+        <app-icon name="key" [size]="22"></app-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">Pay</span>
+        <span class="stat-label">Paiements</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Grille inférieure -->
+  <div class="dash-grid">
+
+    <!-- Alertes stock faible -->
+    <div class="dash-card">
+      <h3>
+        <app-icon name="alert" [size]="18"></app-icon>
+        Stock faible
+      </h3>
+      <ul class="alert-list" *ngIf="lowStockProducts.length > 0; else noAlerts">
+        <li *ngFor="let p of lowStockProducts" class="alert-item">
+          <span class="name">{{ p.name }}</span>
+          <span class="qty">{{ p.availableQuantity }} restant(s)</span>
+        </li>
+      </ul>
+      <ng-template #noAlerts>
+        <p class="empty-msg">
+          <app-icon name="check" [size]="20"></app-icon>
+          Aucun produit en alerte
+        </p>
+      </ng-template>
+    </div>
+
+    <div class="dash-card">
+      <h3>
+        <app-icon name="cart" [size]="18"></app-icon>
+        Commandes récentes
+      </h3>
+      <ul class="activity-list" *ngIf="recentOrders.length > 0; else noOrders">
+        <li *ngFor="let o of recentOrders" class="activity-item">
+          <div class="activity-icon out">
+            <app-icon name="cart" [size]="14"></app-icon>
+          </div>
+          <div class="activity-info">
+            <span class="title">{{ o.reference || 'CMD-' + o.id }}</span>
+            <span class="date">{{ o.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <span class="qty out">{{ o.totalAmount | number:'1.2-2' }} €</span>
+        </li>
+      </ul>
+      <ng-template #noOrders>
+        <p class="empty-msg">
+          <app-icon name="info" [size]="20"></app-icon>
+          Aucune commande récente
+        </p>
+      </ng-template>
+    </div>
+
+  </div>
+
+  <div class="loading-overlay" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Chargement...</p>
+  </div>
+
+</div>

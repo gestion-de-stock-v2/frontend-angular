@@ -1,0 +1,30 @@
+<div class="settings-page">
+  <div class="page-header">
+    <div class="page-title">
+      <app-icon name="settings" [size]="28"></app-icon>
+      <div><h2>Paramètres</h2><p>Configuration de l'application</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><app-icon name="sun" [size]="20"></app-icon><h3>Apparence</h3></div>
+    <div class="row">
+      <div><strong>Mode sombre</strong><p>Active le thème sombre</p></div>
+      <button class="btn" (click)="theme.toggle()">{{ theme.theme() === 'dark' ? 'Activé' : 'Désactivé' }}</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><app-icon name="user" [size]="20"></app-icon><h3>Compte</h3></div>
+    <div class="row">
+      <div><strong>Utilisateur</strong><p>{{ auth.currentUser()?.username }} — {{ auth.currentUser()?.role }}</p></div>
+      <a routerLink="/profile" class="btn">Voir profil</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><app-icon name="info" [size]="20"></app-icon><h3>À propos</h3></div>
+    <div class="row"><div><strong>Version</strong><p>Gestion de Stock v1.0</p></div></div>
+    <div class="row"><div><strong>Backend</strong><p>Monolithe :8080 — Microservices :8222</p></div></div>
+  </div>
+</div>

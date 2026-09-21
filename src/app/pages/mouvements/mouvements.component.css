@@ -1,0 +1,206 @@
+/* ============================================================
+   MOUVEMENTS — CHARTE GRAPHIQUE
+   ============================================================ */
+:host {
+  display: block;
+}
+
+h2 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin: 0 0 1.75rem;
+  padding-bottom: .75rem;
+  color: #111827;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  height: 3px;
+  border-radius: 2px;
+  background: #F97316;
+}
+
+/* Formulaire */
+.form {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  background: #FFFFFF;
+  padding: 1.25rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(17, 24, 39, .06);
+  border-left: 4px solid #1E3A8A;
+  margin-bottom: 1rem;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  font-size: .8rem;
+  font-weight: 700;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.form select,
+.form input {
+  padding: .7rem .9rem;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: .95rem;
+  color: #111827;
+  font-family: inherit;
+  background: #FFFFFF;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.form select:focus,
+.form input:focus {
+  outline: none;
+  border-color: #1E3A8A;
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, .15);
+}
+
+.form button {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: .9rem;
+  font-family: inherit;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  background: #F97316;
+  color: #FFFFFF;
+  align-self: flex-end;
+}
+
+.form button:hover:not(:disabled) {
+  background: #EA580C;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(249, 115, 22, .40);
+}
+
+.erro {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+  padding: .7rem 1rem;
+  border-radius: 8px;
+  font-size: .9rem;
+  margin: 0 0 1rem;
+}
+
+/* Tableau */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #FFFFFF;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(17, 24, 39, .06);
+}
+
+.table thead {
+  background: #F3F4F6;
+}
+
+.table th {
+  padding: .85rem 1rem;
+  text-align: left;
+  font-size: .78rem;
+  font-weight: 700;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.table td {
+  padding: .85rem 1rem;
+  border-bottom: 1px solid #F3F4F6;
+  color: #111827;
+  font-size: .9rem;
+}
+
+.table tbody tr {
+  transition: background .15s;
+}
+
+.table tbody tr:hover {
+  background: #F9FAFB;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Badge Entrée / Sortie */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .3rem .75rem;
+  border-radius: 20px;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.badge.entrada {
+  background: #ECFDF5;
+  color: #16A34A;
+  border: 1px solid #A7F3D0;
+}
+
+.badge.saida {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+}
+
+/* Colonnes spéciales */
+.table td:nth-child(3) {
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: #111827;
+}
+
+.table td:nth-child(5) {
+  font-size: .82rem;
+  color: #6B7280;
+  font-family: 'Courier New', monospace;
+}
+
+.table td:nth-child(4) {
+  color: #6B7280;
+  font-size: .85rem;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,140 @@
+.products-page { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.page-header {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; flex-wrap: wrap;
+}
+.page-title { display: flex; align-items: center; gap: .75rem; color: #1e40af; }
+.page-title h2 { margin: 0; color: #0f172a; font-size: 1.5rem; font-weight: 700; }
+.page-title p { margin: .15rem 0 0; color: #64748b; font-size: .9rem; }
+
+.stats-mini { display: flex; gap: .75rem; flex-wrap: wrap; }
+.badge-total, .badge-value {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .5rem .9rem;
+  border-radius: 8px;
+  font-size: .85rem;
+  font-weight: 600;
+}
+.badge-total { background: #eff6ff; color: #1e40af; }
+.badge-value { background: #f0fdf4; color: #166534; }
+
+.search-bar {
+  position: relative; display: flex; align-items: center;
+  max-width: 480px;
+}
+.search-bar app-icon {
+  position: absolute; left: 12px;
+  color: #94a3b8; pointer-events: none;
+}
+.search-bar input {
+  width: 100%;
+  padding: .7rem .9rem .7rem 2.4rem;
+  background: #fff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: .95rem;
+  font-family: inherit;
+  transition: all .2s;
+}
+.search-bar input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+}
+
+.card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  overflow-x: auto;
+}
+
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td {
+  padding: .85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #f1f5f9;
+}
+.table th {
+  background: #f8fafc; color: #475569;
+  font-weight: 700; font-size: .78rem;
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.table tbody tr { transition: background .15s; }
+.table tbody tr:hover { background: #f8fafc; }
+
+.id-badge {
+  display: inline-block;
+  padding: .15rem .55rem;
+  background: #f1f5f9; color: #475569;
+  border-radius: 6px;
+  font-size: .8rem; font-weight: 700;
+  font-family: monospace;
+}
+
+.desc-cell {
+  color: #64748b; font-size: .85rem;
+  max-width: 280px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.tag {
+  display: inline-block;
+  padding: .2rem .6rem;
+  background: #eff6ff; color: #1e40af;
+  border-radius: 6px;
+  font-size: .75rem; font-weight: 600;
+}
+.tag.empty { background: #f1f5f9; color: #94a3b8; }
+
+.price, .value {
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+.price { color: #0f172a; }
+.value { color: #16a34a; }
+
+.stock-badge {
+  display: inline-block;
+  padding: .25rem .65rem;
+  border-radius: 12px;
+  font-size: .8rem; font-weight: 700;
+}
+.stock-badge.high { background: #dcfce7; color: #166534; }
+.stock-badge.medium { background: #fef3c7; color: #92400e; }
+.stock-badge.low { background: #fee2e2; color: #991b1b; }
+
+.empty-row { padding: 2rem !important; text-align: center; color: #94a3b8; }
+
+.msg-error {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .7rem 1rem;
+  background: #fef2f2; color: #b91c1c;
+  border: 1px solid #fecaca; border-radius: 8px;
+  font-size: .9rem;
+}
+
+.loading {
+  display: flex; flex-direction: column; align-items: center;
+  gap: .75rem; padding: 3rem 1rem;
+  color: #64748b;
+}
+.spinner {
+  width: 40px; height: 40px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+:host-context(html.dark) .page-title h2 { color: #f1f5f9; }
+:host-context(html.dark) .card { background: #1e293b; }
+:host-context(html.dark) .table th { background: #0f172a; color: #cbd5e1; }
+:host-context(html.dark) .table td { color: #f1f5f9; border-bottom-color: #334155; }
+:host-context(html.dark) .table tbody tr:hover { background: #334155; }
+:host-context(html.dark) .search-bar input { background: #0f172a; color: #f1f5f9; border-color: #334155; }
+:host-context(html.dark) .id-badge { background: #334155; color: #cbd5e1; }
+:host-context(html.dark) .price { color: #f1f5f9; }

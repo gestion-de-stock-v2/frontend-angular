@@ -1,0 +1,83 @@
+<div class="orders-page">
+  <div class="page-header">
+    <div class="page-title">
+      <app-icon name="cart" [size]="28"></app-icon>
+      <div><h2>Commandes</h2><p>Orchestration des commandes</p></div>
+    </div>
+    <button class="btn-primary" (click)="toggleForm()">
+      <app-icon [name]="showForm ? 'close' : 'plus'" [size]="18"></app-icon>
+      <span>{{ showForm ? 'Annuler' : 'Nouvelle commande' }}</span>
+    </button>
+  </div>
+
+  <div class="form-card" *ngIf="showForm">
+    <div class="card-header"><app-icon name="cart" [size]="20"></app-icon><h3>Créer une commande</h3></div>
+    <form (ngSubmit)="submit()" class="user-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Client</label>
+          <select [(ngModel)]="selectedCustomerId" name="customer" required>
+            <option [ngValue]="null">-- Sélectionner --</option>
+            <option *ngFor="let c of customers" [ngValue]="c.id">{{ c.firstname }} {{ c.lastname }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Méthode de paiement</label>
+          <select [(ngModel)]="paymentMethod" name="paymentMethod">
+            <option value="CREDIT_CARD">Carte bancaire</option>
+            <option value="PAYPAL">PayPal</option>
+            <option value="CASH">Espèces</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="lines-section">
+        <div class="lines-header">
+          <label>Lignes de commande</label>
+          <button type="button" class="btn-secondary" (click)="addLine()">
+            <app-icon name="plus" [size]="14"></app-icon> Ajouter
+          </button>
+        </div>
+        <div *ngFor="let l of lines; let i = index" class="line-row">
+          <select [(ngModel)]="l.productId" [name]="'product' + i">
+            <option [ngValue]="null">-- Produit --</option>
+            <option *ngFor="let p of products" [ngValue]="p.id">{{ p.name }} ({{ p.price | number:'1.2-2' }} €)</option>
+          </select>
+          <input [(ngModel)]="l.quantity" [name]="'qty' + i" type="number" min="1" placeholder="Qté" />
+          <button type="button" class="btn-icon danger" (click)="removeLine(i)">
+            <app-icon name="trash" [size]="16"></app-icon>
+          </button>
+        </div>
+      </div>
+
+      <p class="total"><strong>Total : {{ total | number:'1.2-2' }} €</strong></p>
+      <p *ngIf="erro" class="msg-error">{{ erro }}</p>
+      <p *ngIf="success" class="msg-success">{{ success }}</p>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="toggleForm()">Annuler</button>
+        <button type="submit" class="btn-primary" [disabled]="loading">{{ loading ? 'Envoi...' : 'Créer' }}</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><app-icon name="cart" [size]="20"></app-icon><h3>Commandes ({{ orders.length }})</h3></div>
+    <table class="table">
+      <thead><tr><th>ID</th><th>Référence</th><th>Client</th><th>Montant</th><th>Paiement</th><th>Date</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let o of orders">
+          <td>{{ o.id }}</td>
+          <td>{{ o.reference }}</td>
+          <td>#{{ o.customerId }}</td>
+          <td>{{ o.totalAmount | number:'1.2-2' }} €</td>
+          <td>{{ o.paymentMethod }}</td>
+          <td>{{ o.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+        </tr>
+        <tr *ngIf="orders.length === 0">
+          <td colspan="6" class="empty-row">Aucune commande</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

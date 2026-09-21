@@ -1,0 +1,17 @@
+<div class="hub">
+  <div class="tabs">
+    <button class="tab" [class.active]="tab === 'ms'" (click)="setTab('ms')">
+      <app-icon name="box" [size]="16"></app-icon>
+      <span>Microservices</span>
+    </button>
+    <button class="tab" [class.active]="tab === 'mono'" (click)="setTab('mono')">
+      <app-icon name="package" [size]="16"></app-icon>
+      <span>Monolithe</span>
+    </button>
+  </div>
+
+  <div class="content">
+    <app-products *ngIf="tab === 'ms'"></app-products>
+    <app-produtos  *ngIf="tab === 'mono'"></app-produtos>
+  </div>
+</div>
