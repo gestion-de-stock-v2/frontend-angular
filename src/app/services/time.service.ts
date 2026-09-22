@@ -1,31 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, of } from 'rxjs';
-
-export interface TimeInfo {
-  datetime: string;
-  timezone: string;
-  dayOfWeek: string;
-  dayOfYear: number;
-}
 
 @Injectable({ providedIn: 'root' })
 export class TimeService {
-  private readonly base = 'https://worldtimeapi.org/api/ip';
+  getCurrentTime(): string {
+    return new Date().toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  }
 
-  constructor(private http: HttpClient) {}
+  getCurrentDate(): string {
+    return new Date().toLocaleDateString('fr-FR', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  }
 
-  getCurrentTime(): Observable<TimeInfo> {
-    return this.http.get<any>(this.base).pipe(
-      catchError(() => {
-        const now = new Date();
-        return of({
-          datetime: now.toISOString(),
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          dayOfWeek: now.toLocaleDateString('fr-FR', { weekday: 'long' }),
-          dayOfYear: Math.floor((now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000)
-        });
-      })
-    );
+  getTimezone(): string {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 }

@@ -20,7 +20,6 @@ interface NouvelUtilisateur {
   imports: [CommonModule, FormsModule, IconComponent],
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css']
-
 })
 export class UsuariosComponent implements OnInit {
   usuarios: Usuario[] = [];
@@ -37,13 +36,13 @@ export class UsuariosComponent implements OnInit {
   };
 
   roleColors: Record<Role, string> = {
-    ADMIN:       '#dc2626',
-    GERANT:      '#2563eb',
-    MAGASINIER:  '#d97706',
-    VENDEUR:     '#16a34a',
-    ACHETEUR:    '#4f46e5',
-    COMPTABLE:   '#9333ea',
-    OBSERVATEUR: '#64748b'
+    ADMIN:       '#0C2ED2',
+    GERANT:      '#1B3BD8',
+    MAGASINIER:  '#2A47DE',
+    VENDEUR:     '#3B5BDB',
+    ACHETEUR:    '#4D6BFE',
+    COMPTABLE:   '#5E7AFE',
+    OBSERVATEUR: '#6B7280'
   };
 
   showForm = false;

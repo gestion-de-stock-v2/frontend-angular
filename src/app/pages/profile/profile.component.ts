@@ -10,8 +10,7 @@ import { Role } from '../../models/usuario.model';
   standalone: true,
   imports: [CommonModule, FormsModule, IconComponent],
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'] ,
-
+  styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent {
   showPassword = false;
@@ -33,13 +32,13 @@ export class ProfileComponent {
   };
 
   roleColors: Record<Role, string> = {
-    ADMIN:       '#dc2626',
-    GERANT:      '#2563eb',
-    MAGASINIER:  '#d97706',
-    VENDEUR:     '#16a34a',
-    ACHETEUR:    '#4f46e5',
-    COMPTABLE:   '#9333ea',
-    OBSERVATEUR: '#64748b'
+    ADMIN:       '#0C2ED2',
+    GERANT:      '#1B3BD8',
+    MAGASINIER:  '#2A47DE',
+    VENDEUR:     '#3B5BDB',
+    ACHETEUR:    '#4D6BFE',
+    COMPTABLE:   '#5E7AFE',
+    OBSERVATEUR: '#6B7280'
   };
 
   roleIcons: Record<Role, string> = {

@@ -1,31 +1,44 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
-import { GeoPosition, ReverseGeocodeResult } from '../models/location.model';
+
+export interface LocationData {
+  latitude: number;
+  longitude: number;
+  city: string;
+  country: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class GeolocationService {
-  constructor(private http: HttpClient) {}
 
-  getCurrentPosition(): Observable<GeoPosition> {
-    return from(new Promise<GeoPosition>((resolve, reject) => {
+  getCurrentPosition(): Observable<LocationData> {
+    return from(new Promise<LocationData>((resolve, reject) => {
       if (!navigator.geolocation) {
-        reject(new Error('Géolocalisation non supportée'));
+        reject('Géolocalisation non supportée');
         return;
       }
+
       navigator.geolocation.getCurrentPosition(
-        (pos) => resolve({
-          latitude: pos.coords.latitude,
-          longitude: pos.coords.longitude
-        }),
-        (err) => reject(new Error('Erreur de géolocalisation : ' + err.message)),
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          try {
+            const res = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`
+            );
+            const data = await res.json();
+            resolve({
+              latitude,
+              longitude,
+              city: data.address?.city || data.address?.town || data.address?.village || 'Inconnu',
+              country: data.address?.country || 'Inconnu'
+            });
+          } catch {
+            resolve({ latitude, longitude, city: 'Inconnu', country: 'Inconnu' });
+          }
+        },
+        (error) => reject(error.message),
         { enableHighAccuracy: true, timeout: 10000 }
       );
     }));
-  }
-
-  reverseGeocode(lat: number, lon: number): Observable<ReverseGeocodeResult> {
-    const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=fr`;
-    return this.http.get<any>(url);
   }
 }

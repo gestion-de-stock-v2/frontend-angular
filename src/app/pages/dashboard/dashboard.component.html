@@ -1,14 +1,96 @@
 <div class="dashboard-page">
 
+  <!-- En-tête -->
   <div class="dash-header">
     <div>
-      <h2>Tableau de bord</h2>
+      <h2>
+        <app-icon name="dashboard" [size]="24"></app-icon>
+        Tableau de bord
+      </h2>
       <p>Vue d'ensemble de votre activité</p>
     </div>
-    <button class="btn-refresh" (click)="carregar()">
+    <button class="btn-refresh" (click)="carregar(); refreshLocation()">
       <app-icon name="trending" [size]="18"></app-icon>
       <span>Actualiser</span>
     </button>
+  </div>
+
+  <!-- Widgets : heure / position / météo -->
+  <div class="info-widgets">
+
+    <!-- Horloge -->
+    <div class="info-card">
+      <div class="info-icon">
+        <app-icon name="clock" [size]="28"></app-icon>
+      </div>
+      <div class="info-content">
+        <div class="info-label">Heure actuelle</div>
+        <div class="info-value">{{ currentTime }}</div>
+        <div class="info-sub">{{ currentDate }}</div>
+        <div class="info-sub">{{ timezone }}</div>
+      </div>
+    </div>
+
+    <!-- Géolocalisation -->
+    <div class="info-card">
+      <div class="info-icon">
+        <app-icon name="pin" [size]="28"></app-icon>
+      </div>
+      <div class="info-content">
+        <div class="info-label">Votre position</div>
+        <div class="info-value">{{ location?.city || '—' }}</div>
+        <div class="info-sub" *ngIf="location?.country">{{ location?.country }}</div>
+        <div class="info-sub" *ngIf="location">
+          {{ location?.latitude | number:'1.4-4' }}, {{ location?.longitude | number:'1.4-4' }}
+        </div>
+        <button class="info-btn" (click)="refreshLocation()">
+          <app-icon name="trending" [size]="14"></app-icon>
+          Actualiser
+        </button>
+        <div class="info-error" *ngIf="locationError">{{ locationError }}</div>
+      </div>
+    </div>
+
+    <!-- Météo / climat -->
+    <div class="info-card">
+      <div class="info-icon">
+        <app-icon name="cloud" [size]="28"></app-icon>
+      </div>
+      <div class="info-content">
+        <div class="info-label">Climat</div>
+        <div class="info-value" *ngIf="weather">
+          {{ weather.temperature | number:'1.0-1' }} °C
+        </div>
+        <div class="info-value" *ngIf="weatherLoading">Chargement…</div>
+        <div class="info-value" *ngIf="!weather && !weatherLoading">—</div>
+        <div class="info-sub" *ngIf="weather">{{ weatherLabel(weather.weathercode) }}</div>
+        <div class="info-sub" *ngIf="weather">
+          Vent : {{ weather.windspeed | number:'1.0-1' }} km/h
+        </div>
+        <div class="info-error" *ngIf="weatherError">{{ weatherError }}</div>
+      </div>
+    </div>
+
+    <!-- Relief / altitude -->
+    <div class="info-card">
+      <div class="info-icon">
+        <app-icon name="trending" [size]="28"></app-icon>
+      </div>
+      <div class="info-content">
+        <div class="info-label">Relief</div>
+        <div class="info-value" *ngIf="location">
+          {{ location.latitude > 0 ? 'Nord' : 'Sud' }}
+        </div>
+        <div class="info-sub" *ngIf="location">
+          Lat: {{ location.latitude | number:'1.2-2' }}°
+        </div>
+        <div class="info-sub" *ngIf="location">
+          Lon: {{ location.longitude | number:'1.2-2' }}°
+        </div>
+        <div class="info-sub" *ngIf="!location">Détection…</div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Erreur -->
@@ -20,7 +102,7 @@
   <!-- Cartes statistiques -->
   <div class="stats-grid">
 
-    <div class="stat-card" (click)="goTo('/products')">
+    <div class="stat-card" (click)="goTo('/produtos')">
       <div class="stat-icon blue">
         <app-icon name="box" [size]="22"></app-icon>
       </div>
@@ -50,7 +132,7 @@
       </div>
     </div>
 
-    <div class="stat-card" (click)="goTo('/products')">
+    <div class="stat-card">
       <div class="stat-icon green">
         <app-icon name="package" [size]="22"></app-icon>
       </div>
@@ -60,7 +142,7 @@
       </div>
     </div>
 
-    <div class="stat-card" (click)="goTo('/orders')">
+    <div class="stat-card">
       <div class="stat-icon red">
         <app-icon name="chart" [size]="22"></app-icon>
       </div>
@@ -70,22 +152,11 @@
       </div>
     </div>
 
-    <div class="stat-card" (click)="goTo('/payments')">
-      <div class="stat-icon cyan">
-        <app-icon name="key" [size]="22"></app-icon>
-      </div>
-      <div class="stat-info">
-        <span class="stat-value">Pay</span>
-        <span class="stat-label">Paiements</span>
-      </div>
-    </div>
-
   </div>
 
   <!-- Grille inférieure -->
   <div class="dash-grid">
 
-    <!-- Alertes stock faible -->
     <div class="dash-card">
       <h3>
         <app-icon name="alert" [size]="18"></app-icon>

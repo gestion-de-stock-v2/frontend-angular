@@ -1,19 +1,48 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #F5F5F5;
+}
+
 .app-main {
-  margin-right: 260px;
+  flex: 1;
+  min-width: 0;
+  margin-left: 260px;
   padding: 2rem;
-  max-width: calc(1400px - 260px);
-  transition: margin-right .3s ease;
+  width: 100%;
+  max-width: 100%;
+  transition: margin-left .3s ease, padding .3s ease;
+  animation: fadeInMain .4s ease-out;
+}
+
+@keyframes fadeInMain {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.app-main > * {
+  animation: fadeInContent .45s ease-out;
+}
+
+@keyframes fadeInContent {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 900px) {
   .app-main {
-    margin-right: 220px;
+    margin-left: 220px;
+    padding: 1.5rem;
   }
 }
 
 @media (max-width: 720px) {
   .app-main {
-    margin-right: 0;
+    margin-left: 0;
     padding: 1rem;
   }
+}
+
+:host-context(html.dark) .app-layout {
+  background: #1A1A1A;
 }

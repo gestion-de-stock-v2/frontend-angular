@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ProductService } from '../../services/product.service';
-import { CustomerService } from '../../services/customer.service';
-import { OrderService } from '../../services/order.service';
+import { HttpClient } from '@angular/common/http';
 import { IconComponent } from '../../components/icon/icon.component';
-import { Product } from '../../models/product.model';
-import { Customer } from '../../models/customer.model';
-import { Order } from '../../models/order.model';
+import { GeolocationService, LocationData } from '../../services/geolocation.service';
+import { WeatherService, WeatherData } from '../../services/weather.service';
+import { TimeService } from '../../services/time.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,60 +14,137 @@ import { Order } from '../../models/order.model';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+
+  // Stats
   totalProducts = 0;
   totalCustomers = 0;
   totalOrders = 0;
-  totalRevenue = 0;
   stockTotal = 0;
-  lowStockProducts: Product[] = [];
-  recentOrders: Order[] = [];
-  loading = true;
+  totalRevenue = 0;
+
+  lowStockProducts: any[] = [];
+  recentOrders: any[] = [];
+
   erro = '';
+  loading = false;
+
+  // Widgets
+  currentTime = '';
+  currentDate = '';
+  timezone = '';
+  private clockInterval: any;
+
+  location: LocationData | null = null;
+  locationError = '';
+
+  weather: WeatherData | null = null;
+  weatherError = '';
+  weatherLoading = false;
 
   constructor(
-    private productService: ProductService,
-    private customerService: CustomerService,
-    private orderService: OrderService,
-    private router: Router
+    private http: HttpClient,
+    private router: Router,
+    private geolocService: GeolocationService,
+    private weatherService: WeatherService,
+    private timeService: TimeService
   ) {}
 
   ngOnInit(): void {
+    this.startClock();
+    this.refreshLocation();
     this.carregar();
   }
 
+  ngOnDestroy(): void {
+    if (this.clockInterval) clearInterval(this.clockInterval);
+  }
+
+  // Horloge temps réel
+  startClock(): void {
+    const update = () => {
+      this.currentTime = this.timeService.getCurrentTime();
+      this.currentDate = this.timeService.getCurrentDate();
+      this.timezone = this.timeService.getTimezone();
+    };
+    update();
+    this.clockInterval = setInterval(update, 1000);
+  }
+
+  // Géolocalisation + météo
+  refreshLocation(): void {
+    this.locationError = '';
+    this.weatherError = '';
+    this.weatherLoading = true;
+
+    this.geolocService.getCurrentPosition().subscribe({
+      next: (loc) => {
+        this.location = loc;
+        this.loadWeather(loc.latitude, loc.longitude);
+      },
+      error: (err) => {
+        this.locationError = 'Position indisponible : ' + err;
+        this.weatherLoading = false;
+      }
+    });
+  }
+
+  loadWeather(lat: number, lon: number): void {
+    this.weatherService.getWeather(lat, lon).subscribe({
+      next: (res: any) => {
+        this.weather = {
+          temperature: res.current_weather.temperature,
+          windspeed: res.current_weather.windspeed,
+          weathercode: res.current_weather.weathercode,
+          humidity: res.hourly?.relativehumidity_2m?.[0] || 0
+        };
+        this.weatherLoading = false;
+      },
+      error: () => {
+        this.weatherError = 'Météo indisponible';
+        this.weatherLoading = false;
+      }
+    });
+  }
+
+  weatherLabel(code: number): string {
+    return this.weatherService.getWeatherLabel(code);
+  }
+
+  // Statistiques
   carregar(): void {
+    this.erro = '';
     this.loading = true;
 
-    // Produits
-    this.productService.findAll().subscribe({
+    // Produits (backend standalone)
+    this.http.get<any>(`/api/produtos`).subscribe({
       next: (d) => {
-        this.totalProducts = d.length;
-        this.stockTotal = d.reduce((sum, p) => sum + (p.availableQuantity || 0), 0);
-        this.lowStockProducts = d
-          .filter(p => (p.availableQuantity || 0) < 10)
-          .sort((a, b) => (a.availableQuantity || 0) - (b.availableQuantity || 0))
-          .slice(0, 5);
+        const list = Array.isArray(d) ? d : (d.content ?? []);
+        this.totalProducts = list.length;
+        this.stockTotal = list.reduce((s: number, p: any) => s + (p.quantidade || 0), 0);
+        this.lowStockProducts = list
+          .filter((p: any) => (p.quantidade || 0) < 10)
+          .slice(0, 5)
+          .map((p: any) => ({ name: p.nome, availableQuantity: p.quantidade }));
       },
-      error: (e) => this.erro = e?.error?.message || 'Erreur produits'
+      error: () => this.erro = 'Erreur chargement produits'
     });
 
-    // Clients
-    this.customerService.findAll().subscribe({
+    // Clients (microservices)
+    this.http.get<any[]>(`/api/v1/customers`).subscribe({
       next: (d) => this.totalCustomers = d.length,
-      error: (e) => this.erro = e?.error?.message || 'Erreur clients'
+      error: () => {}
     });
 
-    this.orderService.findAll().subscribe({
+    // Commandes (microservices)
+    this.http.get<any[]>(`/api/v1/orders`).subscribe({
       next: (d) => {
         this.totalOrders = d.length;
-        this.totalRevenue = d.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
-        this.recentOrders = d
-          .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime())
-          .slice(0, 5);
+        this.totalRevenue = d.reduce((s, o) => s + (o.totalAmount || 0), 0);
+        this.recentOrders = d.slice(-5).reverse();
         this.loading = false;
       },
-      error: (e) => { this.erro = e?.error?.message || 'Erreur commandes'; this.loading = false; }
+      error: () => { this.loading = false; }
     });
   }
 

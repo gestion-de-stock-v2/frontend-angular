@@ -1,8 +1,3 @@
-/* ============================================================
-   PROFILE — SANS ROUGE
-   Blanc #FFFFFF  |  Bleu #1E3A8A  |  Noir #111827  |  Orange #F97316
-   ============================================================ */
-
 .profile-page {
   display: flex;
   flex-direction: column;
@@ -11,9 +6,6 @@
   margin: 0 auto;
 }
 
-/* ============================================================
-   EN-TÊTE — avatar + infos
-   ============================================================ */
 .profile-header {
   display: flex;
   align-items: center;
@@ -21,8 +13,8 @@
   background: #FFFFFF;
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(17, 24, 39, .08);
-  border-left: 4px solid #1E3A8A;
+  box-shadow: 0 4px 20px rgba(26, 26, 26, .08);
+  border-left: 4px solid #0C2ED2;
   position: relative;
   overflow: hidden;
 }
@@ -35,7 +27,7 @@
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(30, 58, 138, .10) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(12, 46, 210, .10) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -43,12 +35,12 @@
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background: #1E3A8A;
+  background: #0C2ED2;
   color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(17, 24, 39, .15);
+  box-shadow: 0 8px 24px rgba(26, 26, 26, .15);
   flex-shrink: 0;
   position: relative;
   z-index: 1;
@@ -71,7 +63,7 @@
   position: relative;
   margin: 0;
   padding-bottom: .5rem;
-  color: #111827;
+  color: #1A1A1A;
   font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: -.02em;
@@ -85,11 +77,11 @@
   width: 48px;
   height: 3px;
   border-radius: 2px;
-  background: #F97316;
+  background: #0C2ED2;
 }
 
 .username {
-  color: #111827;
+  color: #1A1A1A;
   opacity: .6;
   margin: 0;
   font-family: 'Courier New', monospace;
@@ -101,19 +93,16 @@
   padding: .35rem .85rem;
   border-radius: 20px;
   color: #FFFFFF;
-  background: #1E3A8A;
+  background: #0C2ED2;
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .8px;
   margin-top: .5rem;
   width: fit-content;
-  box-shadow: 0 2px 8px rgba(17, 24, 39, .15);
+  box-shadow: 0 2px 8px rgba(26, 26, 26, .15);
   text-transform: uppercase;
 }
 
-/* ============================================================
-   GRILLE
-   ============================================================ */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -141,20 +130,17 @@
   }
 }
 
-/* ============================================================
-   CARTES
-   ============================================================ */
 .card {
   background: #FFFFFF;
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 2px 12px rgba(17, 24, 39, .08);
-  border-left: 4px solid #1E3A8A;
+  box-shadow: 0 2px 12px rgba(26, 26, 26, .08);
+  border-left: 4px solid #0C2ED2;
   transition: box-shadow .2s, transform .2s;
 }
 
 .card:hover {
-  box-shadow: 0 8px 24px rgba(17, 24, 39, .12);
+  box-shadow: 0 8px 24px rgba(26, 26, 26, .12);
   transform: translateY(-2px);
 }
 
@@ -163,28 +149,25 @@
   align-items: center;
   gap: .5rem;
   margin-bottom: 1rem;
-  color: #1E3A8A;
+  color: #0C2ED2;
   padding-bottom: .75rem;
-  border-bottom: 1px solid rgba(17, 24, 39, .08);
+  border-bottom: 1px solid rgba(26, 26, 26, .08);
 }
 
 .card-header h3 {
   margin: 0;
   font-size: 1rem;
-  color: #111827;
+  color: #1A1A1A;
   font-weight: 700;
 }
 
-/* ============================================================
-   LIGNES D'INFORMATION
-   ============================================================ */
 .info-row {
   display: flex;
   align-items: center;
   gap: .75rem;
   padding: .75rem 0;
-  border-bottom: 1px solid rgba(17, 24, 39, .08);
-  color: #111827;
+  border-bottom: 1px solid rgba(26, 26, 26, .08);
+  color: #1A1A1A;
 }
 
 .info-row:last-child {
@@ -199,7 +182,7 @@
 
 .info-row .label {
   font-size: .7rem;
-  color: #111827;
+  color: #1A1A1A;
   opacity: .5;
   text-transform: uppercase;
   letter-spacing: .8px;
@@ -208,29 +191,23 @@
 }
 
 .info-row .value {
-  color: #111827;
+  color: #1A1A1A;
   font-weight: 600;
   font-size: .95rem;
 }
 
-/* ============================================================
-   CARTE RÔLE / PERMISSIONS
-   ============================================================ */
 .role-card {
-  border-left: 4px solid #1E3A8A;
+  border-left: 4px solid #0C2ED2;
 }
 
 .role-description {
-  color: #111827;
+  color: #1A1A1A;
   opacity: .8;
   line-height: 1.7;
   margin: 0;
   font-size: .95rem;
 }
 
-/* ============================================================
-   FORMULAIRE MOT DE PASSE
-   ============================================================ */
 .pwd-form {
   display: flex;
   flex-direction: column;
@@ -245,7 +222,7 @@
   display: block;
   font-size: .85rem;
   font-weight: 600;
-  color: #111827;
+  color: #1A1A1A;
   margin-bottom: .4rem;
 }
 
@@ -258,7 +235,7 @@
 .pwd-form .input-icon {
   position: absolute;
   left: 12px;
-  color: #111827;
+  color: #1A1A1A;
   opacity: .4;
   pointer-events: none;
   transition: color .2s, opacity .2s;
@@ -267,28 +244,28 @@
 .pwd-form input {
   width: 100%;
   padding: .75rem .75rem .75rem 2.6rem;
-  border: 1.5px solid rgba(17, 24, 39, .25);
+  border: 1.5px solid rgba(26, 26, 26, .25);
   border-radius: 8px;
   font-size: .95rem;
-  color: #111827;
+  color: #1A1A1A;
   background: #FFFFFF;
   transition: border-color .2s, box-shadow .2s;
   font-family: inherit;
 }
 
 .pwd-form input::placeholder {
-  color: #111827;
+  color: #1A1A1A;
   opacity: .35;
 }
 
 .pwd-form input:hover {
-  border-color: rgba(17, 24, 39, .45);
+  border-color: rgba(26, 26, 26, .45);
 }
 
 .pwd-form input:focus {
   outline: none;
-  border-color: #1E3A8A;
-  box-shadow: 0 0 0 3px rgba(30, 58, 138, .15);
+  border-color: #0C2ED2;
+  box-shadow: 0 0 0 3px rgba(12, 46, 210, .15);
 }
 
 .pwd-form .toggle-pwd {
@@ -296,7 +273,7 @@
   right: 8px;
   background: none;
   border: none;
-  color: #111827;
+  color: #1A1A1A;
   opacity: .5;
   cursor: pointer;
   padding: 6px;
@@ -308,18 +285,17 @@
 }
 
 .pwd-form .toggle-pwd:hover {
-  background: rgba(17, 24, 39, .06);
+  background: rgba(26, 26, 26, .06);
   opacity: 1;
 }
 
-/* ---------- Bouton principal : bleu ciel + blanc → orange au survol ---------- */
 .pwd-form button[type="submit"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: .5rem;
   padding: .75rem 1.5rem;
-  background: #1E3A8A;
+  background: #0C2ED2;
   color: #FFFFFF;
   border: none;
   border-radius: 8px;
@@ -333,7 +309,7 @@
 }
 
 .pwd-form button[type="submit"]:hover:not(:disabled) {
-  background: #F97316;
+  background: #0A25A8;
   transform: translateY(-1px);
 }
 
@@ -346,9 +322,6 @@
   cursor: not-allowed;
 }
 
-/* ============================================================
-   MESSAGES — sans rouge
-   ============================================================ */
 .msg-success,
 .msg-error {
   display: flex;
@@ -368,9 +341,9 @@
 }
 
 .msg-success {
-  background: #1E3A8A;
+  background: #0C2ED2;
 }
 
 .msg-error {
-  background: #F97316;
+  background: #0A25A8;
 }

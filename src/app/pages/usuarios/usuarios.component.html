@@ -1,6 +1,5 @@
 <div class="usuarios-page">
 
-  <!-- En-tête -->
   <div class="page-header">
     <div class="page-title">
       <app-icon name="users" [size]="28"></app-icon>
@@ -15,39 +14,30 @@
     </button>
   </div>
 
-  <!-- Statistiques -->
   <div class="stats-grid">
     <div class="stat-card">
-      <div class="stat-icon" style="background:#dbeafe;color:#1e40af;">
-        <app-icon name="users" [size]="22"></app-icon>
-      </div>
+      <div class="stat-icon"><app-icon name="users" [size]="22"></app-icon></div>
       <div>
         <span class="stat-value">{{ usuarios.length }}</span>
         <span class="stat-label">Total</span>
       </div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon" style="background:#dcfce7;color:#16a34a;">
-        <app-icon name="check" [size]="22"></app-icon>
-      </div>
+      <div class="stat-icon"><app-icon name="check" [size]="22"></app-icon></div>
       <div>
         <span class="stat-value">{{ actifs }}</span>
         <span class="stat-label">Actifs</span>
       </div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon" style="background:#fee2e2;color:#dc2626;">
-        <app-icon name="close" [size]="22"></app-icon>
-      </div>
+      <div class="stat-icon"><app-icon name="close" [size]="22"></app-icon></div>
       <div>
         <span class="stat-value">{{ inactifs }}</span>
         <span class="stat-label">Inactifs</span>
       </div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon" style="background:#fef3c7;color:#d97706;">
-        <app-icon name="shield" [size]="22"></app-icon>
-      </div>
+      <div class="stat-icon"><app-icon name="shield" [size]="22"></app-icon></div>
       <div>
         <span class="stat-value">{{ countByRole('ADMIN') }}</span>
         <span class="stat-label">Administrateurs</span>
@@ -55,7 +45,6 @@
     </div>
   </div>
 
-  <!-- Formulaire de création -->
   <div class="card form-card" *ngIf="showForm">
     <div class="card-header">
       <app-icon name="plus" [size]="20"></app-icon>
@@ -139,19 +128,16 @@
     </form>
   </div>
 
-  <!-- Message de succès -->
   <p *ngIf="success" class="msg-success">
     <app-icon name="check" [size]="16"></app-icon>
     <span>{{ success }}</span>
   </p>
 
-  <!-- Message d'erreur global -->
   <p *ngIf="erro && !showForm" class="msg-error">
     <app-icon name="alert" [size]="16"></app-icon>
     <span>{{ erro }}</span>
   </p>
 
-  <!-- Liste des utilisateurs -->
   <div class="card">
     <div class="card-header">
       <app-icon name="users" [size]="20"></app-icon>
@@ -173,9 +159,9 @@
       <tr *ngFor="let u of usuarios" [class.inactive]="!u.actif">
         <td>
           <div class="user-cell">
-              <span class="user-avatar-sm" [style.background]="getRoleColor(u.role)">
-                <app-icon [name]="getRoleIcon(u.role)" [size]="14"></app-icon>
-              </span>
+            <span class="user-avatar-sm" [style.background]="getRoleColor(u.role)">
+              <app-icon [name]="getRoleIcon(u.role)" [size]="14"></app-icon>
+            </span>
             <strong>{{ u.username }}</strong>
             <span class="self-tag" *ngIf="u.username === auth.currentUser()?.username">(vous)</span>
           </div>
@@ -186,15 +172,15 @@
           <span>{{ u.email }}</span>
         </td>
         <td>
-            <span class="role-pill" [style.background]="getRoleColor(u.role)">
-              {{ u.role }}
-            </span>
+          <span class="role-pill" [style.background]="getRoleColor(u.role)">
+            {{ u.role }}
+          </span>
         </td>
         <td>
-            <span class="status-pill" [class.active]="u.actif" [class.inactive]="!u.actif">
-              <app-icon [name]="u.actif ? 'check' : 'close'" [size]="12"></app-icon>
-              {{ u.actif ? 'Actif' : 'Désactivé' }}
-            </span>
+          <span class="status-pill" [class.active]="u.actif" [class.inactive]="!u.actif">
+            <app-icon [name]="u.actif ? 'check' : 'close'" [size]="12"></app-icon>
+            {{ u.actif ? 'Actif' : 'Désactivé' }}
+          </span>
         </td>
         <td class="actions-cell">
           <button class="btn-icon" (click)="toggleActif(u)" title="{{ u.actif ? 'Désactiver' : 'Activer' }}">

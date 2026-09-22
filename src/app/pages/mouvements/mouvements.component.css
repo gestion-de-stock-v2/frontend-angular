@@ -1,6 +1,3 @@
-/* ============================================================
-   MOUVEMENTS — CHARTE GRAPHIQUE
-   ============================================================ */
 :host {
   display: block;
 }
@@ -12,7 +9,7 @@ h2 {
   gap: .6rem;
   margin: 0 0 1.75rem;
   padding-bottom: .75rem;
-  color: #111827;
+  color: #1A1A1A;
   font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: -.02em;
@@ -26,10 +23,9 @@ h2::after {
   width: 48px;
   height: 3px;
   border-radius: 2px;
-  background: #F97316;
+  background: #4D6BFE;
 }
 
-/* Formulaire */
 .form {
   display: flex;
   gap: 1rem;
@@ -38,8 +34,8 @@ h2::after {
   background: #FFFFFF;
   padding: 1.25rem;
   border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(17, 24, 39, .06);
-  border-left: 4px solid #1E3A8A;
+  box-shadow: 0 2px 12px rgba(26, 26, 26, .06);
+  border-left: 4px solid #4D6BFE;
   margin-bottom: 1rem;
 }
 
@@ -59,10 +55,10 @@ h2::after {
 .form select,
 .form input {
   padding: .7rem .9rem;
-  border: 1.5px solid #D1D5DB;
+  border: 1.5px solid #E5E7EB;
   border-radius: 8px;
   font-size: .95rem;
-  color: #111827;
+  color: #1A1A1A;
   font-family: inherit;
   background: #FFFFFF;
   font-weight: 500;
@@ -74,8 +70,8 @@ h2::after {
 .form select:focus,
 .form input:focus {
   outline: none;
-  border-color: #1E3A8A;
-  box-shadow: 0 0 0 3px rgba(30, 58, 138, .15);
+  border-color: #4D6BFE;
+  box-shadow: 0 0 0 3px rgba(77, 107, 254, .15);
 }
 
 .form button {
@@ -90,42 +86,41 @@ h2::after {
   font-size: .9rem;
   font-family: inherit;
   transition: background .2s, transform .15s, box-shadow .2s;
-  background: #F97316;
+  background: #4D6BFE;
   color: #FFFFFF;
   align-self: flex-end;
 }
 
 .form button:hover:not(:disabled) {
-  background: #EA580C;
+  background: #3B5BDB;
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(249, 115, 22, .40);
+  box-shadow: 0 6px 18px rgba(77, 107, 254, .40);
 }
 
 .erro {
   display: flex;
   align-items: center;
   gap: .5rem;
-  background: #FEF2F2;
-  color: #DC2626;
-  border: 1px solid #FECACA;
+  background: #4D6BFE;
+  color: #FFFFFF;
+  border: 1px solid #4D6BFE;
   padding: .7rem 1rem;
   border-radius: 8px;
   font-size: .9rem;
   margin: 0 0 1rem;
 }
 
-/* Tableau */
 .table {
   width: 100%;
   border-collapse: collapse;
   background: #FFFFFF;
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(17, 24, 39, .06);
+  box-shadow: 0 2px 12px rgba(26, 26, 26, .06);
 }
 
 .table thead {
-  background: #F3F4F6;
+  background: #F5F5F5;
 }
 
 .table th {
@@ -141,8 +136,8 @@ h2::after {
 
 .table td {
   padding: .85rem 1rem;
-  border-bottom: 1px solid #F3F4F6;
-  color: #111827;
+  border-bottom: 1px solid #F5F5F5;
+  color: #1A1A1A;
   font-size: .9rem;
 }
 
@@ -151,14 +146,13 @@ h2::after {
 }
 
 .table tbody tr:hover {
-  background: #F9FAFB;
+  background: #F5F5F5;
 }
 
 .table tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* Badge Entrée / Sortie */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -172,22 +166,21 @@ h2::after {
 }
 
 .badge.entrada {
-  background: #ECFDF5;
-  color: #16A34A;
-  border: 1px solid #A7F3D0;
+  background: #F5F5F5;
+  color: #4D6BFE;
+  border: 1px solid #E5E7EB;
 }
 
 .badge.saida {
-  background: #FEF2F2;
-  color: #DC2626;
-  border: 1px solid #FECACA;
+  background: #4D6BFE;
+  color: #FFFFFF;
+  border: 1px solid #4D6BFE;
 }
 
-/* Colonnes spéciales */
 .table td:nth-child(3) {
   font-weight: 700;
   font-family: 'Courier New', monospace;
-  color: #111827;
+  color: #1A1A1A;
 }
 
 .table td:nth-child(5) {

@@ -1,11 +1,6 @@
-/* ============================================================
-   UTILISATEURS — BLEU CIEL + BLANC UNIQUEMENT
-   Normal : bleu ciel + texte blanc
-   Hover  : couleur qui change (au choix plus bas)
-   ============================================================ */
 :host {
   display: block;
-  --role-color: #1E3A8A;
+  --role-color: #4D6BFE;
 }
 
 .usuarios-page {
@@ -14,7 +9,6 @@
   gap: 1.75rem;
 }
 
-/* ---------- En-tête ---------- */
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -27,30 +21,29 @@
   display: flex;
   align-items: center;
   gap: .75rem;
-  color: #1E3A8A;
+  color: #4D6BFE;
 }
 
 .page-title h2 {
   margin: 0;
-  color: #111827;
+  color: #1A1A1A;
   font-size: 1.5rem;
   font-weight: 700;
 }
 
 .page-title p {
   margin: .25rem 0 0;
-  color: #111827;
+  color: #1A1A1A;
   opacity: .6;
   font-size: .9rem;
 }
 
-/* ---------- Bouton Ajouter : bleu ciel + blanc ---------- */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: .5rem;
   padding: .7rem 1.2rem;
-  background: #1E3A8A;
+  background: #4D6BFE;
   color: #FFFFFF;
   border: none;
   border-radius: 8px;
@@ -62,7 +55,7 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #F97316;          /* ← change en orange au survol */
+  background: #3B5BDB;
   transform: translateY(-1px);
 }
 
@@ -71,13 +64,12 @@
   cursor: not-allowed;
 }
 
-/* ---------- Bouton Annuler : idem ---------- */
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: .5rem;
   padding: .7rem 1.2rem;
-  background: #1E3A8A;
+  background: #4D6BFE;
   color: #FFFFFF;
   border: none;
   border-radius: 8px;
@@ -89,11 +81,10 @@
 }
 
 .btn-secondary:hover {
-  background: #F97316;
+  background: #3B5BDB;
   transform: translateY(-1px);
 }
 
-/* ---------- Statistiques ---------- */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -107,16 +98,16 @@
   background: #FFFFFF;
   padding: 1.25rem;
   border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(17, 24, 39, .08);
-  border-left: 4px solid #1E3A8A;
+  box-shadow: 0 2px 12px rgba(26, 26, 26, .08);
+  border-left: 4px solid #4D6BFE;
 }
 
 .stat-icon {
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: #1E3A8A;
-  color: #FFFFFF;
+  background: #F5F5F5;
+  color: #4D6BFE;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,7 +117,7 @@
 .stat-value {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #111827;
+  color: #1A1A1A;
   line-height: 1;
 }
 
@@ -134,18 +125,17 @@
   margin-top: .25rem;
   font-size: .78rem;
   font-weight: 600;
-  color: #111827;
+  color: #1A1A1A;
   opacity: .6;
   text-transform: uppercase;
   letter-spacing: .5px;
 }
 
-/* ---------- Carte générique ---------- */
 .card {
   background: #FFFFFF;
   padding: 1.5rem;
   border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(17, 24, 39, .08);
+  box-shadow: 0 2px 12px rgba(26, 26, 26, .08);
 }
 
 .card-header {
@@ -154,19 +144,18 @@
   gap: .5rem;
   margin-bottom: 1rem;
   padding-bottom: .75rem;
-  color: #1E3A8A;
-  border-bottom: 1px solid rgba(17, 24, 39, .08);
+  color: #4D6BFE;
+  border-bottom: 1px solid rgba(26, 26, 26, .08);
 }
 
 .card-header h3 {
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
-  color: #111827;
+  color: #1A1A1A;
 }
 
-/* ---------- Formulaire ---------- */
-.form-card { border-left: 4px solid #1E3A8A; }
+.form-card { border-left: 4px solid #4D6BFE; }
 .user-form { display: flex; flex-direction: column; gap: 1rem; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
@@ -179,17 +168,17 @@
   margin-bottom: .4rem;
   font-size: .85rem;
   font-weight: 600;
-  color: #111827;
+  color: #1A1A1A;
 }
 
-.required { color: #F97316; }
+.required { color: #4D6BFE; }
 
 .input-wrapper { position: relative; display: flex; align-items: center; }
 
 .input-icon {
   position: absolute;
   left: 12px;
-  color: #111827;
+  color: #1A1A1A;
   opacity: .4;
   pointer-events: none;
 }
@@ -197,21 +186,21 @@
 .input-wrapper input {
   width: 100%;
   padding: .7rem .9rem .7rem 2.4rem;
-  border: 1.5px solid rgba(17, 24, 39, .25);
+  border: 1.5px solid rgba(26, 26, 26, .25);
   border-radius: 8px;
   background: #FFFFFF;
-  color: #111827;
+  color: #1A1A1A;
   font-size: .95rem;
   font-family: inherit;
   transition: border-color .2s, box-shadow .2s;
 }
 
-.input-wrapper input::placeholder { color: #111827; opacity: .35; }
+.input-wrapper input::placeholder { color: #1A1A1A; opacity: .35; }
 
 .input-wrapper input:focus {
   outline: none;
-  border-color: #1E3A8A;
-  box-shadow: 0 0 0 3px rgba(30, 58, 138, .15);
+  border-color: #4D6BFE;
+  box-shadow: 0 0 0 3px rgba(77, 107, 254, .15);
 }
 
 .toggle-pwd {
@@ -221,7 +210,7 @@
   background: none;
   border: none;
   border-radius: 4px;
-  color: #111827;
+  color: #1A1A1A;
   opacity: .5;
   cursor: pointer;
   display: inline-flex;
@@ -232,7 +221,6 @@
 
 .toggle-pwd:hover { opacity: 1; }
 
-/* ---------- Grille des rôles ---------- */
 .roles-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -245,21 +233,21 @@
   justify-content: center;
   gap: .4rem;
   padding: .65rem .5rem;
-  border: 1.5px solid #1E3A8A;
+  border: 1.5px solid #4D6BFE;
   border-radius: 8px;
   background: #FFFFFF;
-  color: #1E3A8A;
+  color: #4D6BFE;
   cursor: pointer;
   transition: background .2s, color .2s;
 }
 
 .role-option:hover {
-  background: #1E3A8A;
+  background: #4D6BFE;
   color: #FFFFFF;
 }
 
 .role-option.selected {
-  background: #1E3A8A;
+  background: #4D6BFE;
   color: #FFFFFF;
 }
 
@@ -274,21 +262,20 @@
   justify-content: flex-end;
   gap: .75rem;
   padding-top: .75rem;
-  border-top: 1px solid rgba(17, 24, 39, .08);
+  border-top: 1px solid rgba(26, 26, 26, .08);
 }
 
-/* ---------- Tableau ---------- */
 .table { width: 100%; border-collapse: collapse; }
 
 .table th,
 .table td {
   padding: .85rem 1rem;
   text-align: left;
-  border-bottom: 1px solid rgba(17, 24, 39, .08);
+  border-bottom: 1px solid rgba(26, 26, 26, .08);
 }
 
 .table th {
-  background: #1E3A8A;
+  background: #4D6BFE;
   color: #FFFFFF;
   font-weight: 700;
   font-size: .78rem;
@@ -296,18 +283,17 @@
   letter-spacing: .5px;
 }
 
-.table td { color: #111827; font-size: .9rem; }
-.table tbody tr:hover { background: rgba(17, 24, 39, .04); }
+.table td { color: #1A1A1A; font-size: .9rem; }
+.table tbody tr:hover { background: rgba(26, 26, 26, .04); }
 .table tbody tr.inactive { opacity: .55; }
 
-/* ---------- Cellules ---------- */
 .user-cell { display: flex; align-items: center; gap: .6rem; }
 
 .user-avatar-sm {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #1E3A8A;
+  background: #4D6BFE;
   color: #FFFFFF;
   display: inline-flex;
   align-items: center;
@@ -319,7 +305,7 @@
   padding: .15rem .4rem;
   font-size: .7rem;
   font-weight: 600;
-  background: #1E3A8A;
+  background: #4D6BFE;
   color: #FFFFFF;
   border-radius: 4px;
 }
@@ -328,17 +314,16 @@
   display: flex;
   align-items: center;
   gap: .4rem;
-  color: #111827;
+  color: #1A1A1A;
   opacity: .65;
   font-size: .85rem;
 }
 
-/* ---------- Badges ---------- */
 .role-pill {
   display: inline-block;
   padding: .25rem .65rem;
   border-radius: 12px;
-  background: #1E3A8A;
+  background: #4D6BFE;
   color: #FFFFFF;
   font-size: .7rem;
   font-weight: 700;
@@ -356,10 +341,9 @@
   font-weight: 600;
 }
 
-.status-pill.active   { background: #1E3A8A; color: #FFFFFF; }
-.status-pill.inactive { background: #1E3A8A; color: #FFFFFF; opacity: .55; }
+.status-pill.active   { background: #4D6BFE; color: #FFFFFF; }
+.status-pill.inactive { background: #4D6BFE; color: #FFFFFF; opacity: .55; }
 
-/* ---------- Boutons d'action : bleu ciel + blanc ---------- */
 .actions-cell { display: flex; gap: .35rem; }
 
 .btn-icon {
@@ -367,7 +351,7 @@
   height: 34px;
   border: none;
   border-radius: 6px;
-  background: #1E3A8A;
+  background: #4D6BFE;
   color: #FFFFFF;
   cursor: pointer;
   display: inline-flex;
@@ -376,9 +360,8 @@
   transition: background .2s, transform .15s;
 }
 
-/* Au survol → orange (l'accent) */
 .btn-icon:hover:not(:disabled) {
-  background: #F97316;
+  background: #3B5BDB;
   transform: translateY(-1px);
 }
 
@@ -387,17 +370,15 @@
   cursor: not-allowed;
 }
 
-/* ---------- État vide ---------- */
 .empty-row {
   padding: 2rem !important;
   text-align: center;
-  color: #111827;
+  color: #1A1A1A;
   opacity: .55;
 }
 
 .empty-row p { margin: 0; font-size: .9rem; }
 
-/* ---------- Messages ---------- */
 .msg-error,
 .msg-success {
   display: flex;
@@ -407,6 +388,6 @@
   border-radius: 8px;
   font-size: .9rem;
   margin: 0;
-  background: #1E3A8A;
+  background: #4D6BFE;
   color: #FFFFFF;
 }
