@@ -1,27 +1,104 @@
 <div class="produtos-page">
 
+  <!-- ============================================================
+       EN-TÊTE
+       ============================================================ -->
   <div class="page-header">
     <div class="page-title">
       <app-icon name="box" [size]="28"></app-icon>
       <div>
-        <h2>Produits</h2>
-        <p>Catalogue et disponibilité</p>
+        <h2>Produits & Stock</h2>
+        <p>Catalogue, disponibilité et alertes</p>
       </div>
     </div>
-    <button class="btn-primary" (click)="toggleForm()">
-      <app-icon [name]="showForm ? 'close' : 'plus'" [size]="18"></app-icon>
-      <span>{{ showForm ? 'Annuler' : 'Nouveau produit' }}</span>
-    </button>
+    <div class="header-actions">
+      <button class="btn-secondary" (click)="carregar()">
+        <app-icon name="trending" [size]="18"></app-icon>
+        <span>Actualiser</span>
+      </button>
+      <button class="btn-primary" (click)="toggleForm()">
+        <app-icon [name]="showForm ? 'close' : 'plus'" [size]="18"></app-icon>
+        <span>{{ showForm ? 'Annuler' : 'Nouveau produit' }}</span>
+      </button>
+    </div>
   </div>
 
-  <!-- Barre de recherche -->
-  <div class="search-bar">
-    <app-icon name="search" [size]="18"></app-icon>
-    <input [(ngModel)]="searchTerm" (ngModelChange)="applyFilter()"
-           placeholder="Rechercher un produit..." />
+  <!-- ============================================================
+       STATISTIQUES
+       ============================================================ -->
+  <div class="stats-grid">
+    <div class="stat-card" [class.active]="filter === 'all'" (click)="setFilter('all')">
+      <div class="stat-icon blue"><app-icon name="package" [size]="22"></app-icon></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalProducts }}</span>
+        <span class="stat-label">Total</span>
+      </div>
+    </div>
+
+    <div class="stat-card" [class.active]="filter === 'low'" (click)="setFilter('low')">
+      <div class="stat-icon red"><app-icon name="alert" [size]="22"></app-icon></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ lowStockCount }}</span>
+        <span class="stat-label">Stock faible</span>
+      </div>
+    </div>
+
+    <div class="stat-card" [class.active]="filter === 'medium'" (click)="setFilter('medium')">
+      <div class="stat-icon orange"><app-icon name="box" [size]="22"></app-icon></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ mediumStockCount }}</span>
+        <span class="stat-label">Stock moyen</span>
+      </div>
+    </div>
+
+    <div class="stat-card" [class.active]="filter === 'high'" (click)="setFilter('high')">
+      <div class="stat-icon green"><app-icon name="check" [size]="22"></app-icon></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ highStockCount }}</span>
+        <span class="stat-label">Stock élevé</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon purple"><app-icon name="chart" [size]="22"></app-icon></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalUnits }}</span>
+        <span class="stat-label">Unités</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon cyan"><app-icon name="trending" [size]="22"></app-icon></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalValue | number:'1.0-0' }} €</span>
+        <span class="stat-label">Valeur</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Formulaire -->
+  <!-- ============================================================
+       RECHERCHE + FILTRES
+       ============================================================ -->
+  <div class="toolbar">
+    <div class="search-bar">
+      <app-icon name="search" [size]="18"></app-icon>
+      <input
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="applyFilter()"
+        placeholder="Rechercher un produit..." />
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn" [class.active]="filter === 'all'"    (click)="setFilter('all')">Tous</button>
+      <button class="filter-btn" [class.active]="filter === 'low'"    (click)="setFilter('low')">Stock faible</button>
+      <button class="filter-btn" [class.active]="filter === 'medium'" (click)="setFilter('medium')">Stock moyen</button>
+      <button class="filter-btn" [class.active]="filter === 'high'"   (click)="setFilter('high')">Stock élevé</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       FORMULAIRE
+       ============================================================ -->
   <div class="form-card" *ngIf="showForm">
     <div class="card-header">
       <app-icon [name]="editandoId ? 'edit' : 'plus'" [size]="20"></app-icon>
@@ -29,25 +106,42 @@
     </div>
 
     <form (ngSubmit)="salvar()" class="user-form">
-      <div class="form-group">
-        <label>Nom du produit</label>
-        <input [(ngModel)]="novo.name" name="name" placeholder="Notebook Lenovo" required />
-      </div>
-
-      <div class="form-group">
-        <label>Description</label>
-        <input [(ngModel)]="novo.description" name="description" placeholder="Intel i5, 8GB RAM" />
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nom du produit</label>
+          <input [(ngModel)]="novo.nome" name="nome" placeholder="Notebook Lenovo" required />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input [(ngModel)]="novo.descricao" name="descricao" placeholder="Intel i5, 8GB RAM" />
+        </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label>Prix (€)</label>
-          <input [(ngModel)]="novo.price" name="price" type="number" step="0.01" min="0" required />
+          <input [(ngModel)]="novo.preco" name="preco" type="number" step="0.01" min="0" required />
         </div>
         <div class="form-group">
-          <label>Quantité disponible</label>
-          <input [(ngModel)]="novo.availableQuantity" name="availableQuantity"
-                 type="number" min="0" required />
+          <label>Quantité en stock</label>
+          <input [(ngModel)]="novo.quantidade" name="quantidade" type="number" min="0" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Catégorie</label>
+          <select [(ngModel)]="categoriaId" name="categoria">
+            <option [ngValue]="null">-- Aucune --</option>
+            <option *ngFor="let c of categorias" [ngValue]="c.id">{{ c.nome }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Fournisseur</label>
+          <select [(ngModel)]="fornecedorId" name="fornecedor">
+            <option [ngValue]="null">-- Aucun --</option>
+            <option *ngFor="let f of fornecedores" [ngValue]="f.id">{{ f.nome }}</option>
+          </select>
         </div>
       </div>
 
@@ -57,8 +151,9 @@
       </p>
 
       <div class="form-actions">
-        <button type="button" class="btn-secondary" (click)="toggleForm()">
-          <app-icon name="close" [size]="16"></app-icon> Annuler
+        <button type="button" class="btn-secondary" (click)="cancelar()">
+          <app-icon name="close" [size]="16"></app-icon>
+          <span>Annuler</span>
         </button>
         <button type="submit" class="btn-primary" [disabled]="loading">
           <app-icon name="save" [size]="16"></app-icon>
@@ -68,6 +163,9 @@
     </form>
   </div>
 
+  <!-- ============================================================
+       MESSAGES
+       ============================================================ -->
   <p *ngIf="success" class="msg-success">
     <app-icon name="check" [size]="16"></app-icon>
     <span>{{ success }}</span>
@@ -78,7 +176,9 @@
     <span>{{ erro }}</span>
   </p>
 
-  <!-- Tableau -->
+  <!-- ============================================================
+       TABLEAU
+       ============================================================ -->
   <div class="card">
     <div class="card-header">
       <app-icon name="box" [size]="20"></app-icon>
@@ -91,22 +191,43 @@
         <th>ID</th>
         <th>Nom</th>
         <th>Description</th>
+        <th>Catégorie</th>
+        <th>Fournisseur</th>
         <th>Prix</th>
         <th>Stock</th>
+        <th>Niveau</th>
+        <th>Valeur</th>
         <th>Actions</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let p of filtered">
         <td><span class="id-badge">{{ p.id }}</span></td>
-        <td><strong>{{ p.name }}</strong></td>
-        <td class="desc-cell">{{ p.description }}</td>
-        <td class="price">{{ p.price | number:'1.2-2' }} €</td>
+        <td><strong>{{ p.nome }}</strong></td>
+        <td class="desc-cell">{{ p.descricao }}</td>
         <td>
-            <span class="stock-badge" [ngClass]="getStockClass(p.availableQuantity)">
-              {{ p.availableQuantity }}
+          <span class="tag" *ngIf="p.categoria?.nome">{{ p.categoria?.nome }}</span>
+          <span class="tag empty" *ngIf="!p.categoria?.nome">—</span>
+        </td>
+        <td>
+          <span class="tag supplier" *ngIf="p.fornecedor?.nome">{{ p.fornecedor?.nome }}</span>
+          <span class="tag empty" *ngIf="!p.fornecedor?.nome">—</span>
+        </td>
+        <td class="price">{{ p.preco | number:'1.2-2' }} €</td>
+        <td>
+          <span class="stock-qty">{{ p.quantidade }}</span>
+        </td>
+        <td>
+          <div class="level-bar">
+            <div class="level-fill"
+                 [ngClass]="getStockClass(p.quantidade)"
+                 [style.width.%]="getStockPercent(p.quantidade)"></div>
+          </div>
+          <span class="level-label" [ngClass]="getStockClass(p.quantidade)">
+              {{ getStockLabel(p.quantidade) }}
             </span>
         </td>
+        <td class="value">{{ (p.preco * p.quantidade) | number:'1.2-2' }} €</td>
         <td class="actions-cell">
           <button class="btn-icon" (click)="editar(p)" title="Modifier">
             <app-icon name="edit" [size]="16"></app-icon>
@@ -117,7 +238,7 @@
         </td>
       </tr>
       <tr *ngIf="filtered.length === 0">
-        <td colspan="6" class="empty-row">
+        <td colspan="10" class="empty-row">
           <app-icon name="box" [size]="24"></app-icon>
           <p>Aucun produit{{ searchTerm ? ' correspondant à la recherche' : '' }}</p>
         </td>

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ProductService } from '../../services/product.service';
-import { Product } from '../../models/product.model';
+import { ApiService } from '../../services/api.service';
+import { Produto } from '../../models/produto.model';
+import { Categoria } from '../../models/categoria.model';
+import { Fornecedor } from '../../models/fornecedor.model';
 import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
@@ -14,146 +15,210 @@ import { IconComponent } from '../../components/icon/icon.component';
   styleUrls: ['./produtos.component.css']
 })
 export class ProdutosComponent implements OnInit {
-  produtos: Product[] = [];
-  filtered: Product[] = [];
-  searchTerm = '';
+  produtos: Produto[] = [];
+  filtered: Produto[] = [];
+  categorias: Categoria[] = [];
+  fornecedores: Fornecedor[] = [];
 
-  novo: Product = {
-    name: '',
-    description: '',
-    price: 0,
-    availableQuantity: 0
-  };
-
+  novo: Produto = { nome: '', descricao: '', preco: 0, quantidade: 0 };
+  categoriaId: number | null = null;
+  fornecedorId: number | null = null;
   editandoId: number | null = null;
+
   showForm = false;
   loading = false;
   erro = '';
   success = '';
+  searchTerm = '';
 
-  constructor(private productService: ProductService) {}
+  filter: 'all' | 'low' | 'medium' | 'high' = 'all';
+
+  constructor(private api: ApiService) {}
 
   ngOnInit(): void {
     this.carregar();
+    this.api.getCategorias().subscribe(d => this.categorias = d);
+    this.api.getFornecedores().subscribe(d => this.fornecedores = d);
   }
 
   carregar(): void {
-    this.erro = '';
-    this.productService.findAll().subscribe({
-      next: (d: Product[]) => {
+    this.api.getProdutos().subscribe({
+      next: d => {
         this.produtos = d;
         this.applyFilter();
       },
-      error: (e: HttpErrorResponse) => {
-        this.erro = e?.error?.message || 'Erreur de chargement';
-      }
+      error: e => this.erro = e?.error?.message || 'Erreur de chargement'
     });
   }
 
+  /* ============================================================
+     FILTRES
+     ============================================================ */
+  setFilter(f: 'all' | 'low' | 'medium' | 'high'): void {
+    this.filter = f;
+    this.applyFilter();
+  }
+
   applyFilter(): void {
-    const t = this.searchTerm.toLowerCase().trim();
-    if (!t) {
-      this.filtered = this.produtos;
-      return;
+    const term = this.searchTerm.toLowerCase().trim();
+
+    let result = this.produtos;
+
+    // Filtre stock
+    if (this.filter === 'low') {
+      result = result.filter(p => p.quantidade < 5);
+    } else if (this.filter === 'medium') {
+      result = result.filter(p => p.quantidade >= 5 && p.quantidade < 20);
+    } else if (this.filter === 'high') {
+      result = result.filter(p => p.quantidade >= 20);
     }
-    this.filtered = this.produtos.filter((p: Product) =>
-      p.name?.toLowerCase().includes(t) ||
-      p.description?.toLowerCase().includes(t)
+
+    // Filtre recherche
+    if (term) {
+      result = result.filter(p =>
+        p.nome?.toLowerCase().includes(term) ||
+        p.descricao?.toLowerCase().includes(term) ||
+        p.categoria?.nome?.toLowerCase().includes(term) ||
+        p.fornecedor?.nome?.toLowerCase().includes(term)
+      );
+    }
+
+    this.filtered = result;
+  }
+
+  /* ============================================================
+     STATISTIQUES
+     ============================================================ */
+  get totalProducts(): number {
+    return this.produtos.length;
+  }
+
+  get lowStockCount(): number {
+    return this.produtos.filter(p => p.quantidade < 5).length;
+  }
+
+  get mediumStockCount(): number {
+    return this.produtos.filter(p => p.quantidade >= 5 && p.quantidade < 20).length;
+  }
+
+  get highStockCount(): number {
+    return this.produtos.filter(p => p.quantidade >= 20).length;
+  }
+
+  get totalUnits(): number {
+    return this.produtos.reduce((sum, p) => sum + (p.quantidade || 0), 0);
+  }
+
+  get totalValue(): number {
+    return this.produtos.reduce(
+      (sum, p) => sum + ((p.preco || 0) * (p.quantidade || 0)),
+      0
     );
   }
 
-  toggleForm(): void {
-    this.showForm = !this.showForm;
-    if (!this.showForm) this.reset();
+  /* ============================================================
+     UTILITAIRES STOCK
+     ============================================================ */
+  getStockClass(qty: number): string {
+    if (qty < 5) return 'low';
+    if (qty < 20) return 'medium';
+    return 'high';
   }
 
-  reset(): void {
-    this.novo = { name: '', description: '', price: 0, availableQuantity: 0 };
-    this.editandoId = null;
-    this.erro = '';
-    this.success = '';
+  getStockPercent(qty: number): number {
+    // Barre : 100% à partir de 30 unités
+    const max = 30;
+    return Math.min((qty / max) * 100, 100);
+  }
+
+  getStockLabel(qty: number): string {
+    if (qty === 0) return 'Rupture';
+    if (qty < 5) return 'Faible';
+    if (qty < 20) return 'Moyen';
+    return 'Élevé';
+  }
+
+  /* ============================================================
+     CRUD
+     ============================================================ */
+  toggleForm(): void {
+    this.showForm = !this.showForm;
+    if (!this.showForm) this.cancelar();
   }
 
   salvar(): void {
     this.erro = '';
     this.success = '';
 
-    if (!this.novo.name?.trim()) {
+    if (!this.novo.nome?.trim()) {
       this.erro = 'Le nom est obligatoire';
       return;
     }
-    if (this.novo.price < 0) {
-      this.erro = 'Le prix ne peut pas etre negatif';
-      return;
-    }
-    if (this.novo.availableQuantity < 0) {
-      this.erro = 'La quantite ne peut pas etre negative';
-      return;
-    }
 
-    const payload: Product = {
-      name: this.novo.name.trim(),
-      description: this.novo.description?.trim() || '',
-      price: Number(this.novo.price) || 0,
-      availableQuantity: Number(this.novo.availableQuantity) || 0
+    const payload: Produto = {
+      ...this.novo,
+      preco: Number(this.novo.preco) || 0,
+      quantidade: Number(this.novo.quantidade) || 0,
+      categoria: this.categoriaId ? { id: this.categoriaId, nome: '' } : undefined,
+      fornecedor: this.fornecedorId ? { id: this.fornecedorId, nome: '' } : undefined
     };
 
     this.loading = true;
 
     if (this.editandoId) {
-      this.productService.update(this.editandoId, payload).subscribe({
+      this.api.updateProduto(this.editandoId, payload).subscribe({
         next: () => {
           this.loading = false;
-          this.success = 'Produit mis a jour';
-          this.showForm = false;
-          this.reset();
+          this.success = 'Produit modifié';
+          this.cancelar();
           this.carregar();
         },
-        error: (e: HttpErrorResponse) => {
+        error: e => {
           this.loading = false;
-          this.erro = e?.error?.message || 'Erreur lors de la mise a jour';
+          this.erro = e?.error?.message || 'Erreur modification';
         }
       });
     } else {
-      this.productService.create(payload).subscribe({
+      this.api.createProduto(payload).subscribe({
         next: () => {
           this.loading = false;
-          this.success = 'Produit cree';
-          this.showForm = false;
-          this.reset();
+          this.success = 'Produit créé';
+          this.cancelar();
           this.carregar();
         },
-        error: (e: HttpErrorResponse) => {
+        error: e => {
           this.loading = false;
-          this.erro = e?.error?.message || 'Erreur lors de la creation';
+          this.erro = e?.error?.message || 'Erreur création';
         }
       });
     }
   }
 
-  editar(p: Product): void {
+  editar(p: Produto): void {
     this.editandoId = p.id!;
     this.novo = { ...p };
+    this.categoriaId = p.categoria?.id ?? null;
+    this.fornecedorId = p.fornecedor?.id ?? null;
     this.showForm = true;
+    this.erro = '';
+    this.success = '';
   }
 
   excluir(id: number): void {
     if (confirm('Supprimer ce produit ?')) {
-      this.productService.delete(id).subscribe({
-        next: () => {
-          this.success = 'Produit supprime';
-          this.carregar();
-        },
-        error: (e: HttpErrorResponse) => {
-          this.erro = e?.error?.message || 'Erreur lors de la suppression';
-        }
+      this.api.deleteProduto(id).subscribe({
+        next: () => this.carregar(),
+        error: e => this.erro = e?.error?.message || 'Erreur suppression'
       });
     }
   }
 
-  getStockClass(q: number): string {
-    if (q >= 20) return 'high';
-    if (q >= 10) return 'medium';
-    return 'low';
+  cancelar(): void {
+    this.editandoId = null;
+    this.novo = { nome: '', descricao: '', preco: 0, quantidade: 0 };
+    this.categoriaId = null;
+    this.fornecedorId = null;
+    this.erro = '';
+    this.success = '';
   }
 }

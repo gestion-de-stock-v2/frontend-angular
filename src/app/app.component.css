@@ -1,11 +1,19 @@
 .app-main {
+  margin-right: 260px;
   padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: calc(1400px - 260px);
+  transition: margin-right .3s ease;
+}
+
+@media (max-width: 900px) {
+  .app-main {
+    margin-right: 220px;
+  }
 }
 
 @media (max-width: 720px) {
   .app-main {
+    margin-right: 0;
     padding: 1rem;
   }
 }
