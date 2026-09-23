@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
-import { Movimentacao } from '../../models/movimentacao.model';
-import { Produto } from '../../models/produto.model';
 import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
@@ -14,14 +12,10 @@ import { IconComponent } from '../../components/icon/icon.component';
   styleUrls: ['./mouvements.component.css']
 })
 export class MouvementsComponent implements OnInit {
-  produtos: Produto[] = [];
-  movimentacoes: Movimentacao[] = [];
+  produtos: any[] = [];
+  movimentacoes: any[] = [];
   produtoSelecionadoId: number | null = null;
-
-  nova: Movimentacao = {
-    tipo: 'ENTRADA', quantidade: 1, observacao: '',
-    produto: { nome: '', preco: 0, quantidade: 0 }
-  };
+  novo: any = { type: 'ENTRY', quantity: 1, note: '' };
   erro = '';
 
   constructor(private api: ApiService) {}
@@ -29,7 +23,10 @@ export class MouvementsComponent implements OnInit {
   ngOnInit(): void {
     this.api.getProdutos().subscribe(d => {
       this.produtos = d;
-      if (d.length) { this.produtoSelecionadoId = d[0].id!; this.carregar(); }
+      if (d.length) {
+        this.produtoSelecionadoId = d[0].id;
+        this.carregar();
+      }
     });
   }
 
@@ -41,15 +38,15 @@ export class MouvementsComponent implements OnInit {
   salvar(): void {
     this.erro = '';
     if (!this.produtoSelecionadoId) return;
-    const payload: Movimentacao = {
-      tipo: this.nova.tipo,
-      quantidade: this.nova.quantidade,
-      observacao: this.nova.observacao,
-      produto: { id: this.produtoSelecionadoId, nome: '', preco: 0, quantidade: 0 }
+    const payload = {
+      productId: this.produtoSelecionadoId,
+      type: this.novo.type,
+      quantity: this.novo.quantity,
+      note: this.novo.note
     };
     this.api.createMovimentacao(payload).subscribe({
       next: () => {
-        this.nova.observacao = '';
+        this.novo.note = '';
         this.carregar();
         this.api.getProdutos().subscribe(d => this.produtos = d);
       },

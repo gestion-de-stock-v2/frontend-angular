@@ -2,14 +2,27 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import {LoginRequest, LoginResponse, Role, Usuario} from '../models/usuario.model';
 
 const TOKEN_KEY = 'estoque_token';
 const USER_KEY  = 'estoque_user';
 
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  id: number;
+  username: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private base = '/api/auth';
+  private base = '/api/v1/auth';
   currentUser = signal<LoginResponse | null>(this.loadUser());
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -24,8 +37,8 @@ export class AuthService {
     );
   }
 
-  register(data: Partial<Usuario> & { password: string }): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.base}/register`, data);
+  register(data: any): Observable<any> {
+    return this.http.post<any>(`${this.base}/register`, data);
   }
 
   forgotPassword(email: string): Observable<any> {
@@ -49,8 +62,8 @@ export class AuthService {
 
   getToken(): string | null { return localStorage.getItem(TOKEN_KEY); }
   isLoggedIn(): boolean { return !!this.getToken(); }
-  getRole(): Role | null { return this.currentUser()?.role ?? null; }
-  hasRole(...roles: Role[]): boolean {
+  getRole(): string | null { return this.currentUser()?.role ?? null; }
+  hasRole(...roles: string[]): boolean {
     const r = this.getRole();
     return r !== null && roles.includes(r);
   }

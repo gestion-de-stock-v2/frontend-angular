@@ -1,7 +1,7 @@
 export interface Fornecedor {
   id?: number;
-  nome: string;
-  cnpj?: string;
-  telefone?: string;
+  name: string;
+  registrationNumber?: string;
+  phone?: string;
   email?: string;
 }

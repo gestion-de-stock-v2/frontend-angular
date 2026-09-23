@@ -1,5 +1,15 @@
-<app-header *ngIf="auth.isLoggedIn()"></app-header>
+<ng-container *ngIf="auth.isLoggedIn(); else notLogged">
 
-<main class="app-main">
+  <div class="app-layout">
+    <app-sidebar></app-sidebar>
+
+    <main class="app-content">
+      <router-outlet />
+    </main>
+  </div>
+
+</ng-container>
+
+<ng-template #notLogged>
   <router-outlet />
-</main>
+</ng-template>

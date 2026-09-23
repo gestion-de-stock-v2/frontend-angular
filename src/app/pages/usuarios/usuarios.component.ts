@@ -2,17 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Role, Usuario } from '../../models/usuario.model';
 import { IconComponent } from '../../components/icon/icon.component';
 import { AuthService } from '../../services/auth.service';
-
-interface NouvelUtilisateur {
-  username: string;
-  password: string;
-  nome: string;
-  email: string;
-  role: Role;
-}
 
 @Component({
   selector: 'app-usuarios',
@@ -22,55 +13,41 @@ interface NouvelUtilisateur {
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit {
-  usuarios: Usuario[] = [];
-  roles: Role[] = ['ADMIN', 'GERANT', 'MAGASINIER', 'VENDEUR', 'ACHETEUR', 'COMPTABLE', 'OBSERVATEUR'];
+  usuarios: any[] = [];
+  roles: string[] = ['ADMIN', 'GERANT', 'MAGASINIER', 'VENDEUR', 'ACHETEUR', 'COMPTABLE', 'OBSERVATEUR'];
 
-  roleIcons: Record<Role, string> = {
-    ADMIN:       'crown',
-    GERANT:      'briefcase',
-    MAGASINIER:  'package',
-    VENDEUR:     'cart',
-    ACHETEUR:    'shoppingBag',
-    COMPTABLE:   'chart',
-    OBSERVATEUR: 'eye'
+  roleIcons: Record<string, string> = {
+    ADMIN: 'crown', GERANT: 'briefcase', MAGASINIER: 'package',
+    VENDEUR: 'cart', ACHETEUR: 'shoppingBag', COMPTABLE: 'chart', OBSERVATEUR: 'eye'
   };
-
-  roleColors: Record<Role, string> = {
-    ADMIN:       '#0C2ED2',
-    GERANT:      '#1B3BD8',
-    MAGASINIER:  '#2A47DE',
-    VENDEUR:     '#3B5BDB',
-    ACHETEUR:    '#4D6BFE',
-    COMPTABLE:   '#5E7AFE',
-    OBSERVATEUR: '#6B7280'
+  roleColors: Record<string, string> = {
+    ADMIN: '#2563eb', GERANT: '#2563eb', MAGASINIER: '#2563eb',
+    VENDEUR: '#2563eb', ACHETEUR: '#4f46e5', COMPTABLE: '#2563eb', OBSERVATEUR: '#2563eb'
   };
 
   showForm = false;
   loading = false;
   erro = '';
   success = '';
+  showPassword = false;
 
-  novo: NouvelUtilisateur = {
+  novo: any = {
     username: '',
     password: '',
-    nome: '',
+    name: '',
     email: '',
     role: 'OBSERVATEUR'
   };
 
-  showPassword = false;
-
   constructor(private http: HttpClient, public auth: AuthService) {}
 
-  ngOnInit(): void {
-    this.carregar();
-  }
+  ngOnInit(): void { this.carregar(); }
 
   carregar(): void {
     this.erro = '';
-    this.http.get<Usuario[]>('/api/usuarios').subscribe({
-      next: d => this.usuarios = d,
-      error: e => this.erro = e?.error?.message || 'Erreur lors du chargement'
+    this.http.get<any>('/api/v1/users').subscribe({
+      next: d => this.usuarios = Array.isArray(d) ? d : (d.content ?? []),
+      error: e => this.erro = e?.error?.message || 'Erreur de chargement'
     });
   }
 
@@ -80,7 +57,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.novo = { username: '', password: '', nome: '', email: '', role: 'OBSERVATEUR' };
+    this.novo = { username: '', password: '', name: '', email: '', role: 'OBSERVATEUR' };
     this.erro = '';
     this.success = '';
     this.showPassword = false;
@@ -90,7 +67,7 @@ export class UsuariosComponent implements OnInit {
     this.erro = '';
     this.success = '';
 
-    if (!this.novo.username.trim() || this.novo.username.length < 3) {
+    if (!this.novo.username?.trim() || this.novo.username.length < 3) {
       this.erro = 'Nom d\'utilisateur requis (3 caractères minimum)';
       return;
     }
@@ -98,17 +75,17 @@ export class UsuariosComponent implements OnInit {
       this.erro = 'Mot de passe requis (6 caractères minimum)';
       return;
     }
-    if (!this.novo.nome.trim()) {
+    if (!this.novo.name?.trim()) {
       this.erro = 'Nom complet requis';
       return;
     }
-    if (!this.novo.email.trim()) {
+    if (!this.novo.email?.trim()) {
       this.erro = 'Email requis';
       return;
     }
 
     this.loading = true;
-    this.http.post<Usuario>('/api/auth/register', this.novo).subscribe({
+    this.http.post<any>('/api/v1/auth/register', this.novo).subscribe({
       next: () => {
         this.loading = false;
         this.success = `Utilisateur « ${this.novo.username} » créé avec succès`;
@@ -123,32 +100,21 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  toggleActif(u: Usuario): void {
-    if (!u.id) return;
-    this.http.patch(`/api/usuarios/${u.id}/actif`, {}).subscribe({
-      next: () => this.carregar(),
-      error: (e) => this.erro = e?.error?.message || 'Erreur'
-    });
-  }
-
-  excluir(u: Usuario): void {
+  excluir(u: any): void {
     if (!u.id) return;
     if (u.username === this.auth.currentUser()?.username) {
       this.erro = 'Vous ne pouvez pas supprimer votre propre compte';
       return;
     }
-    if (confirm(`Exclure définitivement l'utilisateur « ${u.username} » ?`)) {
-      this.http.delete(`/api/usuarios/${u.id}`).subscribe({
+    if (confirm(`Supprimer l'utilisateur « ${u.username} » ?`)) {
+      this.http.delete(`/api/v1/users/${u.id}`).subscribe({
         next: () => this.carregar(),
-        error: (e) => this.erro = e?.error?.message || 'Erreur lors de la suppression'
+        error: (e) => this.erro = e?.error?.message || 'Erreur'
       });
     }
   }
 
-  getRoleIcon(role: Role): string { return this.roleIcons[role]; }
-  getRoleColor(role: Role): string { return this.roleColors[role]; }
-
-  get actifs(): number { return this.usuarios.filter(u => u.actif).length; }
-  get inactifs(): number { return this.usuarios.filter(u => !u.actif).length; }
-  countByRole(role: Role): number { return this.usuarios.filter(u => u.role === role).length; }
+  getRoleIcon(role: string): string { return this.roleIcons[role] ?? 'user'; }
+  getRoleColor(role: string): string { return this.roleColors[role] ?? '#64748b'; }
+  countByRole(role: string): number { return this.usuarios.filter(u => u.role === role).length; }
 }

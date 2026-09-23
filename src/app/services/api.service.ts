@@ -1,80 +1,113 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { Categoria } from '../models/categoria.model';
-import { Fornecedor } from '../models/fornecedor.model';
-import { Produto } from '../models/produto.model';
-import { Movimentacao } from '../models/movimentacao.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  private base = '/api';
+  private base = '/api/v1';
 
   constructor(private http: HttpClient) {}
 
-  // Catégories
-  getCategorias(): Observable<Categoria[]> {
-    return this.http.get<Categoria[]>(`${this.base}/categorias`);
-  }
-  getCategoria(id: number): Observable<Categoria> {
-    return this.http.get<Categoria>(`${this.base}/categorias/${id}`);
-  }
-  createCategoria(c: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(`${this.base}/categorias`, c);
-  }
-  updateCategoria(id: number, c: Categoria): Observable<Categoria> {
-    return this.http.put<Categoria>(`${this.base}/categorias/${id}`, c);
-  }
-  deleteCategoria(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.base}/categorias/${id}`);
-  }
-
-  // Fournisseurs
-  getFornecedores(): Observable<Fornecedor[]> {
-    return this.http.get<Fornecedor[]>(`${this.base}/fornecedores`);
-  }
-  getFornecedor(id: number): Observable<Fornecedor> {
-    return this.http.get<Fornecedor>(`${this.base}/fornecedores/${id}`);
-  }
-  createFornecedor(f: Fornecedor): Observable<Fornecedor> {
-    return this.http.post<Fornecedor>(`${this.base}/fornecedores`, f);
-  }
-  updateFornecedor(id: number, f: Fornecedor): Observable<Fornecedor> {
-    return this.http.put<Fornecedor>(`${this.base}/fornecedores/${id}`, f);
-  }
-  deleteFornecedor(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.base}/fornecedores/${id}`);
-  }
-
-  // Produits — accepte tableau OU page Spring
-  getProdutos(): Observable<Produto[]> {
-    return this.http.get<any>(`${this.base}/produtos`).pipe(
+  // CATEGORIES
+  getCategorias(): Observable<any[]> {
+    return this.http.get<any>(`${this.base}/categories`).pipe(
       map(res => Array.isArray(res) ? res : (res.content ?? []))
     );
   }
-  getProduto(id: number): Observable<Produto> {
-    return this.http.get<Produto>(`${this.base}/produtos/${id}`);
+  getCategoria(id: number): Observable<any> {
+    return this.http.get<any>(`${this.base}/categories/${id}`);
   }
-  createProduto(p: Produto): Observable<Produto> {
-    return this.http.post<Produto>(`${this.base}/produtos`, p);
+  createCategoria(c: any): Observable<any> {
+    return this.http.post<any>(`${this.base}/categories`, c);
   }
-  updateProduto(id: number, p: Produto): Observable<Produto> {
-    return this.http.put<Produto>(`${this.base}/produtos/${id}`, p);
+  updateCategoria(id: number, c: any): Observable<any> {
+    return this.http.put<any>(`${this.base}/categories/${id}`, c);
   }
-  deleteProduto(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.base}/produtos/${id}`);
+  deleteCategoria(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/categories/${id}`);
   }
 
-  // Mouvements — accepte tableau OU page Spring
-  getMovimentacoes(produtoId?: number): Observable<Movimentacao[]> {
+  // SUPPLIERS
+  getFornecedores(): Observable<any[]> {
+    return this.http.get<any>(`${this.base}/suppliers`).pipe(
+      map(res => Array.isArray(res) ? res : (res.content ?? []))
+    );
+  }
+  getFornecedor(id: number): Observable<any> {
+    return this.http.get<any>(`${this.base}/suppliers/${id}`);
+  }
+  createFornecedor(f: any): Observable<any> {
+    return this.http.post<any>(`${this.base}/suppliers`, f);
+  }
+  updateFornecedor(id: number, f: any): Observable<any> {
+    return this.http.put<any>(`${this.base}/suppliers/${id}`, f);
+  }
+  deleteFornecedor(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/suppliers/${id}`);
+  }
+
+  // PRODUCTS
+  getProdutos(): Observable<any[]> {
+    return this.http.get<any>(`${this.base}/products`).pipe(
+      map(res => Array.isArray(res) ? res : (res.content ?? []))
+    );
+  }
+  getProduto(id: number): Observable<any> {
+    return this.http.get<any>(`${this.base}/products/${id}`);
+  }
+  createProduto(p: any): Observable<any> {
+    return this.http.post<any>(`${this.base}/products`, p);
+  }
+  updateProduto(id: number, p: any): Observable<any> {
+    return this.http.put<any>(`${this.base}/products/${id}`, p);
+  }
+  deleteProduto(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/products/${id}`);
+  }
+
+  // STOCK MOVEMENTS
+  getMovimentacoes(produtoId?: number): Observable<any[]> {
     const url = produtoId
-      ? `${this.base}/movimentacoes?produtoId=${produtoId}`
-      : `${this.base}/movimentacoes`;
+      ? `${this.base}/stock-movements/product/${produtoId}`
+      : `${this.base}/stock-movements`;
     return this.http.get<any>(url).pipe(
       map(res => Array.isArray(res) ? res : (res.content ?? []))
     );
   }
-  createMovimentacao(m: Movimentacao): Observable<Movimentacao> {
-    return this.http.post<Movimentacao>(`${this.base}/movimentacoes`, m);
+  createMovimentacao(m: any): Observable<any> {
+    return this.http.post<any>(`${this.base}/stock-movements`, m);
+  }
+
+  // ORDERS
+  getOrders(): Observable<any[]> {
+    return this.http.get<any>(`${this.base}/orders`).pipe(
+      map(res => Array.isArray(res) ? res : (res.content ?? []))
+    );
+  }
+  createOrder(o: any): Observable<any> {
+    return this.http.post<any>(`${this.base}/orders`, o);
+  }
+
+  // CUSTOMERS
+  getCustomers(): Observable<any[]> {
+    return this.http.get<any>(`${this.base}/customers`).pipe(
+      map(res => Array.isArray(res) ? res : (res.content ?? []))
+    );
+  }
+  createCustomer(c: any): Observable<any> {
+    return this.http.post<any>(`${this.base}/customers`, c);
+  }
+  deleteCustomer(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.base}/customers/${id}`);
+  }
+
+  // USERS
+  getUsers(): Observable<any[]> {
+    return this.http.get<any>(`${this.base}/users`).pipe(
+      map(res => Array.isArray(res) ? res : (res.content ?? []))
+    );
+  }
+  deleteUser(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/users/${id}`);
   }
 }

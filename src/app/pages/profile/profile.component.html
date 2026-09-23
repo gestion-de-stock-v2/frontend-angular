@@ -1,11 +1,10 @@
 <div class="profile-page">
-
   <div class="profile-header">
     <div class="avatar" [style.background]="user ? getRoleColor(user.role) : '#64748b'">
       <app-icon [name]="user ? getRoleIcon(user.role) : 'user'" [size]="48"></app-icon>
     </div>
     <div class="profile-info">
-      <h2>{{ user?.nome }}</h2>
+      <h2>{{ user?.name }}</h2>
       <p class="username">&#64;{{ user?.username }}</p>
       <span class="role-pill" [style.background]="user ? getRoleColor(user.role) : '#64748b'">
         {{ user?.role }}
@@ -17,15 +16,15 @@
     <div class="card">
       <div class="card-header">
         <app-icon name="info" [size]="20"></app-icon>
-        <h3>Informations personnelles</h3>
+        <h3>Informations</h3>
       </div>
       <div class="info-row">
         <app-icon name="user" [size]="18"></app-icon>
-        <div><span class="label">Nom complet</span><span class="value">{{ user?.nome }}</span></div>
+        <div><span class="label">Nom</span><span class="value">{{ user?.name }}</span></div>
       </div>
       <div class="info-row">
         <app-icon name="key" [size]="18"></app-icon>
-        <div><span class="label">Nom d'utilisateur</span><span class="value">{{ user?.username }}</span></div>
+        <div><span class="label">Username</span><span class="value">{{ user?.username }}</span></div>
       </div>
       <div class="info-row">
         <app-icon name="mail" [size]="18"></app-icon>
@@ -40,7 +39,7 @@
     <div class="card role-card" [style.borderLeftColor]="user ? getRoleColor(user.role) : '#64748b'">
       <div class="card-header">
         <app-icon [name]="user ? getRoleIcon(user.role) : 'shield'" [size]="20"></app-icon>
-        <h3>Vos permissions</h3>
+        <h3>Permissions</h3>
       </div>
       <p class="role-description">{{ user ? getRoleDescription(user.role) : '' }}</p>
     </div>
@@ -72,7 +71,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label>Confirmer le nouveau mot de passe</label>
+        <label>Confirmer</label>
         <div class="input-wrapper">
           <app-icon name="check" [size]="18" class="input-icon"></app-icon>
           <input [(ngModel)]="confirmPassword" name="confirmPassword"
@@ -91,5 +90,4 @@
       </button>
     </form>
   </div>
-
 </div>

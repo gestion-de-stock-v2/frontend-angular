@@ -111,37 +111,50 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return this.weatherService.getWeatherLabel(code);
   }
 
-  // Statistiques
+  // ============================================================
+  // STATISTIQUES
+  // ============================================================
   carregar(): void {
     this.erro = '';
     this.loading = true;
 
-    // Produits (backend standalone)
-    this.http.get<any>(`/api/produtos`).subscribe({
+    // ---- Produits (stock-service) ----
+    this.http.get<any>(`/api/v1/products`).subscribe({
       next: (d) => {
         const list = Array.isArray(d) ? d : (d.content ?? []);
         this.totalProducts = list.length;
-        this.stockTotal = list.reduce((s: number, p: any) => s + (p.quantidade || 0), 0);
+        this.stockTotal = list.reduce(
+          (s: number, p: any) => s + (p.availableQuantity || 0), 0
+        );
         this.lowStockProducts = list
-          .filter((p: any) => (p.quantidade || 0) < 10)
+          .filter((p: any) => (p.availableQuantity || 0) < 10)
           .slice(0, 5)
-          .map((p: any) => ({ name: p.nome, availableQuantity: p.quantidade }));
+          .map((p: any) => ({
+            name: p.name,
+            availableQuantity: p.availableQuantity
+          }));
       },
       error: () => this.erro = 'Erreur chargement produits'
     });
 
-    // Clients (microservices)
-    this.http.get<any[]>(`/api/v1/customers`).subscribe({
-      next: (d) => this.totalCustomers = d.length,
+    // ---- Clients (customer-service) ----
+    this.http.get<any>(`/api/v1/customers`).subscribe({
+      next: (d) => {
+        const list = Array.isArray(d) ? d : (d.content ?? []);
+        this.totalCustomers = list.length;
+      },
       error: () => {}
     });
 
-    // Commandes (microservices)
-    this.http.get<any[]>(`/api/v1/orders`).subscribe({
+    // ---- Commandes (order-service) ----
+    this.http.get<any>(`/api/v1/orders`).subscribe({
       next: (d) => {
-        this.totalOrders = d.length;
-        this.totalRevenue = d.reduce((s, o) => s + (o.totalAmount || 0), 0);
-        this.recentOrders = d.slice(-5).reverse();
+        const list = Array.isArray(d) ? d : (d.content ?? []);
+        this.totalOrders = list.length;
+        this.totalRevenue = list.reduce(
+          (s: number, o: any) => s + (o.totalAmount || o.total || 0), 0
+        );
+        this.recentOrders = list.slice(-5).reverse();
         this.loading = false;
       },
       error: () => { this.loading = false; }

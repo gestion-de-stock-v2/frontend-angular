@@ -1,31 +1,31 @@
-<h2>Fournisseurs</h2>
+<h2><app-icon name="truck" [size]="24"></app-icon> Fournisseurs</h2>
 
-<form #formF="ngForm" (ngSubmit)="formF.valid && salvar()" class="form">
-  <input [(ngModel)]="novo.nome" name="nome" placeholder="Nom *" required minlength="2" #nome="ngModel" />
-  <span class="hint" *ngIf="nome.invalid && nome.touched">Nom obligatoire</span>
-  <input [(ngModel)]="novo.cnpj" name="cnpj" placeholder="CNPJ" />
-  <input [(ngModel)]="novo.telefone" name="telefone" placeholder="Téléphone" />
+<form (ngSubmit)="salvar()" class="form">
+  <input [(ngModel)]="novo.name" name="name" placeholder="Nom *" required />
+  <input [(ngModel)]="novo.registrationNumber" name="registrationNumber" placeholder="N° enregistrement" />
+  <input [(ngModel)]="novo.phone" name="phone" placeholder="Téléphone" />
   <input [(ngModel)]="novo.email" name="email" type="email" placeholder="Email" />
-  <button type="submit" [disabled]="formF.invalid">{{ editandoId ? 'Mettre à jour' : 'Ajouter' }}</button>
+  <button type="submit">{{ editandoId ? 'Mettre à jour' : 'Ajouter' }}</button>
   <button type="button" *ngIf="editandoId" (click)="cancelar()">Annuler</button>
 </form>
 
+<p *ngIf="erro" class="erro">{{ erro }}</p>
+
 <table class="table">
   <thead>
-    <tr><th>ID</th><th>Nom</th><th>CNPJ</th><th>Tél</th><th>Email</th><th>Actions</th></tr>
+    <tr><th>ID</th><th>Nom</th><th>N° enreg.</th><th>Tél</th><th>Email</th><th>Actions</th></tr>
   </thead>
   <tbody>
     <tr *ngFor="let f of fornecedores">
       <td>{{ f.id }}</td>
-      <td>{{ f.nome }}</td>
-      <td>{{ f.cnpj }}</td>
-      <td>{{ f.telefone }}</td>
+      <td>{{ f.name }}</td>
+      <td>{{ f.registrationNumber }}</td>
+      <td>{{ f.phone }}</td>
       <td>{{ f.email }}</td>
       <td>
         <button (click)="editar(f)">Éditer</button>
-        <button (click)="excluir(f.id!)">Supprimer</button>
+        <button (click)="excluir(f.id)">Supprimer</button>
       </td>
     </tr>
-    <tr *ngIf="fornecedores.length === 0"><td colspan="6">Aucun fournisseur</td></tr>
   </tbody>
 </table>

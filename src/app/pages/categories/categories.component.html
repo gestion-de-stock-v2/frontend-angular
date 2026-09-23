@@ -1,18 +1,9 @@
-<h2>Catégories</h2>
+<h2><app-icon name="tag" [size]="24"></app-icon> Catégories</h2>
 
-<form #formCat="ngForm" (ngSubmit)="formCat.valid && salvar()" class="form">
-  <input
-    [(ngModel)]="nova.nome"
-    name="nome"
-    placeholder="Nom de la catégorie"
-    required
-    minlength="2"
-    #nome="ngModel" />
-  <span class="hint" *ngIf="nome.invalid && nome.touched">Nom obligatoire</span>
-
-  <button type="submit" [disabled]="formCat.invalid">
-    {{ editandoId ? 'Mettre à jour' : 'Ajouter' }}
-  </button>
+<form (ngSubmit)="salvar()" class="form">
+  <input [(ngModel)]="nova.name" name="name" placeholder="Nom *" required />
+  <input [(ngModel)]="nova.description" name="description" placeholder="Description" />
+  <button type="submit">{{ editandoId ? 'Mettre à jour' : 'Ajouter' }}</button>
   <button type="button" *ngIf="editandoId" (click)="cancelar()">Annuler</button>
 </form>
 
@@ -20,17 +11,17 @@
 
 <table class="table">
   <thead>
-    <tr><th>ID</th><th>Nom</th><th>Actions</th></tr>
+    <tr><th>ID</th><th>Nom</th><th>Description</th><th>Actions</th></tr>
   </thead>
   <tbody>
     <tr *ngFor="let c of categorias">
       <td>{{ c.id }}</td>
-      <td>{{ c.nome }}</td>
+      <td>{{ c.name }}</td>
+      <td>{{ c.description }}</td>
       <td>
         <button (click)="editar(c)">Éditer</button>
-        <button (click)="excluir(c.id!)">Supprimer</button>
+        <button (click)="excluir(c.id)">Supprimer</button>
       </td>
     </tr>
-    <tr *ngIf="categorias.length === 0"><td colspan="3">Aucune catégorie</td></tr>
   </tbody>
 </table>

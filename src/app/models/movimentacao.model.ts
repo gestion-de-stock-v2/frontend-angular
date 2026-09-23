@@ -1,12 +1,12 @@
-import { Produto } from './produto.model';
-
-export type TipoMovimentacao = 'ENTRADA' | 'SAIDA';
+export type MovementType = 'ENTRY' | 'EXIT';
 
 export interface Movimentacao {
   id?: number;
-  tipo: TipoMovimentacao;
-  quantidade: number;
-  observacao?: string;
-  data?: string;
-  produto: Produto;
+  productId: number;
+  type: MovementType;
+  quantity: number;
+  note?: string;
+  createdAt?: string;
+  productName?: string;
+  availableQuantityAfter?: number;
 }

@@ -1,5 +1,7 @@
 <div class="login-wrapper">
   <div class="login-card">
+
+    <!-- En-tête -->
     <div class="login-header">
       <div class="logo-circle">
         <app-icon name="box" [size]="40"></app-icon>
@@ -7,15 +9,19 @@
       <h1>Gestion de Stock</h1>
       <p class="subtitle">Connectez-vous à votre espace</p>
     </div>
+
+    <!-- Formulaire -->
     <form (ngSubmit)="login()">
 
       <div class="form-group">
         <label>Nom d'utilisateur</label>
         <div class="input-wrapper">
           <app-icon name="user" [size]="18" class="input-icon"></app-icon>
-          <input [(ngModel)]="username" name="username"
+          <input [(ngModel)]="username"
+                 name="username"
                  placeholder="admin"
-                 required autocomplete="username" />
+                 required
+                 autocomplete="username" />
         </div>
       </div>
 
@@ -23,15 +29,21 @@
         <label>Mot de passe</label>
         <div class="input-wrapper">
           <app-icon name="lock" [size]="18" class="input-icon"></app-icon>
-          <input [(ngModel)]="password" name="password"
+          <input [(ngModel)]="password"
+                 name="password"
                  [type]="showPassword ? 'text' : 'password'"
                  placeholder="••••••"
-                 required autocomplete="current-password" />
-          <button type="button" class="toggle-pwd" (click)="showPassword = !showPassword">
+                 required
+                 autocomplete="current-password" />
+          <button type="button"
+                  class="toggle-pwd"
+                  (click)="showPassword = !showPassword"
+                  [attr.aria-label]="showPassword ? 'Masquer' : 'Afficher'">
             <app-icon [name]="showPassword ? 'eyeOff' : 'eye'" [size]="18"></app-icon>
           </button>
         </div>
       </div>
+
       <div class="forgot-row">
         <a routerLink="/forgot-password" class="forgot-link">
           <app-icon name="key" [size]="14"></app-icon>
@@ -51,10 +63,12 @@
 
     </form>
 
+    <!-- Séparateur -->
     <div class="divider">
       <span>ou</span>
     </div>
 
+    <!-- Créer un compte -->
     <div class="signup-row">
       <span>Pas encore de compte ?</span>
       <a routerLink="/signup" class="signup-link">
@@ -63,6 +77,7 @@
       </a>
     </div>
 
+    <!-- Connexion rapide -->
     <div class="profils-demo">
       <p class="profils-title">Connexion rapide</p>
       <div class="profils-grid">
@@ -76,6 +91,7 @@
           <span class="role-name">{{ p.role }}</span>
         </button>
       </div>
+      <p class="hint">Mot de passe : <code>admin123!</code> (avec le point d'exclamation)</p>
     </div>
 
   </div>

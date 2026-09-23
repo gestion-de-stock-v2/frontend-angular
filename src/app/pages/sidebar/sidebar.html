@@ -1,0 +1,62 @@
+<aside class="sidebar">
+
+  <!-- Navigation principale -->
+  <nav class="nav-section">
+    <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+      <app-icon name="dashboard" [size]="20"></app-icon>
+      <span>Tableau de bord</span>
+    </a>
+    <a routerLink="/produtos" routerLinkActive="active" class="nav-item">
+      <app-icon name="box" [size]="20"></app-icon>
+      <span>Produits</span>
+    </a>
+    <a routerLink="/categories" routerLinkActive="active" class="nav-item">
+      <app-icon name="tag" [size]="20"></app-icon>
+      <span>Catégories</span>
+    </a>
+    <a routerLink="/fornecedores" routerLinkActive="active" class="nav-item">
+      <app-icon name="truck" [size]="20"></app-icon>
+      <span>Fournisseurs</span>
+    </a>
+    <a routerLink="/mouvements" routerLinkActive="active" class="nav-item">
+      <app-icon name="swap" [size]="20"></app-icon>
+      <span>Mouvements</span>
+    </a>
+  </nav>
+
+  <div class="nav-divider"></div>
+
+  <!-- Commerce -->
+  <nav class="nav-section">
+    <p class="nav-label">Commerce</p>
+    <a routerLink="/customers" routerLinkActive="active" class="nav-item">
+      <app-icon name="users" [size]="20"></app-icon>
+      <span>Clients</span>
+    </a>
+    <a routerLink="/orders" routerLinkActive="active" class="nav-item">
+      <app-icon name="cart" [size]="20"></app-icon>
+      <span>Commandes</span>
+    </a>
+    <a routerLink="/payments" routerLinkActive="active" class="nav-item">
+      <app-icon name="chart" [size]="20"></app-icon>
+      <span>Paiements</span>
+    </a>
+  </nav>
+
+  <!-- Administration -->
+  <ng-container *ngIf="auth.isAdmin()">
+    <div class="nav-divider"></div>
+    <nav class="nav-section">
+      <p class="nav-label">Administration</p>
+      <a routerLink="/usuarios" routerLinkActive="active" class="nav-item">
+        <app-icon name="shield" [size]="20"></app-icon>
+        <span>Utilisateurs</span>
+      </a>
+      <a routerLink="/settings" routerLinkActive="active" class="nav-item">
+        <app-icon name="settings" [size]="20"></app-icon>
+        <span>Paramètres</span>
+      </a>
+    </nav>
+  </ng-container>
+
+</aside>
