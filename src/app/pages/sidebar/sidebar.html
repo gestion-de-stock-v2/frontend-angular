@@ -1,62 +1,93 @@
-<aside class="sidebar">
+<aside class="app-sidebar">
 
-  <!-- Navigation principale -->
-  <nav class="nav-section">
-    <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
-      <app-icon name="dashboard" [size]="20"></app-icon>
+  <!-- Logo -->
+  <a routerLink="/dashboard" class="brand">
+    <svg class="brand-logo" viewBox="0 0 48 48" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#60a5fa"/>
+          <stop offset="100%" stop-color="#2563eb"/>
+        </linearGradient>
+      </defs>
+      <rect x="4" y="4" width="40" height="40" rx="10" fill="url(#logoGrad)"/>
+      <path d="M14 20 L24 15 L34 20 L34 30 L24 35 L14 30 Z"
+            fill="none" stroke="#fff" stroke-width="2.5"
+            stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M14 20 L24 25 L34 20" fill="none" stroke="#fff"
+            stroke-width="2.5" stroke-linejoin="round"/>
+      <line x1="24" y1="25" x2="24" y2="35" stroke="#fff" stroke-width="2.5"/>
+    </svg>
+    <div class="brand-text">
+      <span class="brand-title">Gestion</span>
+      <span class="brand-sub">de Stock</span>
+    </div>
+  </a>
+
+  <!-- Menu utilisateur -->
+  <div class="user-menu" *ngIf="auth.currentUser() as u">
+
+    <a routerLink="/profile" class="user-chip" [style.--role-color]="getRoleColor(u.role)">
+      <span class="user-avatar">
+        <app-icon name="user" [size]="18"></app-icon>
+      </span>
+      <span class="user-text">
+        <span class="name">{{ u.name }}</span>
+        <span class="role">{{ u.role }}</span>
+      </span>
+    </a>
+
+    <div class="user-actions">
+      <app-theme-toggle></app-theme-toggle>
+      <button class="logout-btn" (click)="auth.logout()" title="Déconnexion">
+        <app-icon name="logout" [size]="18"></app-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+  <nav class="header-nav">
+
+    <a routerLink="/dashboard" routerLinkActive="active">
+      <app-icon name="dashboard" [size]="18"></app-icon>
       <span>Tableau de bord</span>
     </a>
-    <a routerLink="/produtos" routerLinkActive="active" class="nav-item">
-      <app-icon name="box" [size]="20"></app-icon>
-      <span>Produits</span>
+    <a routerLink="/produtos" routerLinkActive="active">
+      <app-icon name="box" [size]="18"></app-icon>
+      <span>Produits &amp; Stock</span>
     </a>
-    <a routerLink="/categories" routerLinkActive="active" class="nav-item">
-      <app-icon name="tag" [size]="20"></app-icon>
+    <a routerLink="/categories" routerLinkActive="active">
+      <app-icon name="tag" [size]="18"></app-icon>
       <span>Catégories</span>
     </a>
-    <a routerLink="/fornecedores" routerLinkActive="active" class="nav-item">
-      <app-icon name="truck" [size]="20"></app-icon>
+    <a routerLink="/fornecedores" routerLinkActive="active">
+      <app-icon name="truck" [size]="18"></app-icon>
       <span>Fournisseurs</span>
     </a>
-    <a routerLink="/mouvements" routerLinkActive="active" class="nav-item">
-      <app-icon name="swap" [size]="20"></app-icon>
+    <a routerLink="/mouvements" routerLinkActive="active">
+      <app-icon name="swap" [size]="18"></app-icon>
       <span>Mouvements</span>
     </a>
-  </nav>
-
-  <div class="nav-divider"></div>
-
-  <!-- Commerce -->
-  <nav class="nav-section">
-    <p class="nav-label">Commerce</p>
-    <a routerLink="/customers" routerLinkActive="active" class="nav-item">
-      <app-icon name="users" [size]="20"></app-icon>
+    <a routerLink="/customers" routerLinkActive="active">
+      <app-icon name="users" [size]="18"></app-icon>
       <span>Clients</span>
     </a>
-    <a routerLink="/orders" routerLinkActive="active" class="nav-item">
-      <app-icon name="cart" [size]="20"></app-icon>
+    <a routerLink="/orders" routerLinkActive="active">
+      <app-icon name="cart" [size]="18"></app-icon>
       <span>Commandes</span>
     </a>
-    <a routerLink="/payments" routerLinkActive="active" class="nav-item">
-      <app-icon name="chart" [size]="20"></app-icon>
+    <a routerLink="/payments" routerLinkActive="active">
+      <app-icon name="key" [size]="18"></app-icon>
       <span>Paiements</span>
     </a>
+    <a routerLink="/usuarios" routerLinkActive="active" *ngIf="auth.isAdmin()">
+      <app-icon name="users" [size]="18"></app-icon>
+      <span>Utilisateurs</span>
+    </a>
+    <a routerLink="/settings" routerLinkActive="active">
+      <app-icon name="settings" [size]="18"></app-icon>
+      <span>Paramètres</span>
+    </a>
+
   </nav>
-
-  <!-- Administration -->
-  <ng-container *ngIf="auth.isAdmin()">
-    <div class="nav-divider"></div>
-    <nav class="nav-section">
-      <p class="nav-label">Administration</p>
-      <a routerLink="/usuarios" routerLinkActive="active" class="nav-item">
-        <app-icon name="shield" [size]="20"></app-icon>
-        <span>Utilisateurs</span>
-      </a>
-      <a routerLink="/settings" routerLinkActive="active" class="nav-item">
-        <app-icon name="settings" [size]="20"></app-icon>
-        <span>Paramètres</span>
-      </a>
-    </nav>
-  </ng-container>
-
 </aside>

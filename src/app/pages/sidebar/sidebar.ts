@@ -3,23 +3,30 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { IconComponent } from '../../components/icon/icon.component';
+import { ThemeToggleComponent } from '../../components/theme-toggle/theme-toggle.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, IconComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    IconComponent,
+    ThemeToggleComponent
+  ],
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.css']
 })
 export class Sidebar {
   private roleColors: Record<string, string> = {
-    ADMIN:       '#144abf',
+    ADMIN:       '#dc2626',
     GERANT:      '#2563eb',
-    MAGASINIER:  '#0d2865',
-    VENDEUR:     '#1143b1',
-    ACHETEUR:    '#2a1fe6',
-    COMPTABLE:   '#2563eb',
-    OBSERVATEUR: '#2e54a6'
+    MAGASINIER:  '#d97706',
+    VENDEUR:     '#16a34a',
+    ACHETEUR:    '#4f46e5',
+    COMPTABLE:   '#9333ea',
+    OBSERVATEUR: '#64748b'
   };
 
   constructor(public auth: AuthService) {}
